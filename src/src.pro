@@ -5,14 +5,16 @@ DEFINES += COMPILEREXPLORER_LIBRARY
 SOURCES += \
     ExplorerOutputPane.cpp \
     CompilerExplorerPlugin.cpp \
-    ExplorerOutputTable.cpp
+    ExplorerOutputTable.cpp \
+    CompilerExplorerOptionsPage.cpp
 
 HEADERS += \
     ExplorerOutputPane.h \
     compilerexplorerconstants.h \
     compilerexplorer_global.h \
     CompilerExplorerPlugin.h \
-    ExplorerOutputTable.h
+    ExplorerOutputTable.h \
+    CompilerExplorerOptionsPage.h
 
 # Qt Creator linking
 

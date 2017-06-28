@@ -15,6 +15,7 @@
 #include <QMenu>
 
 #include "ExplorerOutputPane.h"
+#include "CompilerExplorerOptionsPage.h"
 
 namespace CompilerExplorer {
 namespace Internal {
@@ -51,13 +52,10 @@ bool CompilerExplorerPlugin::initialize(const QStringList &arguments, QString *e
 	auto panelFactory = new ProjectExplorer::ProjectPanelFactory;
 	panelFactory->setPriority(0);
 	panelFactory->setDisplayName(tr("Compile Explorer"));
-	//	panelFactory->setCreateWidgetFunction([this, panelFactory](ProjectExplorer::Project *project) {
-	//		auto widget = new TodoProjectSettingsWidget(project);
-	//		connect(widget, &TodoProjectSettingsWidget::projectSettingsChanged,
-	//		        m_todoItemsProvider, [this, project] { m_todoItemsProvider->projectSettingsChanged(project); });
-	//		return widget;
-	//	});
 	ProjectExplorer::ProjectPanelFactory::registerFactory(panelFactory);
+
+	auto mOptionsPage = new CompilerExplorerOptionsPage(this);
+	addAutoReleasedObject(mOptionsPage);
 	return true;
 }
 
