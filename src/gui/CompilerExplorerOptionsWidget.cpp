@@ -23,4 +23,5 @@ void CompilerExplorerOptionsWidget::apply(QSettings &settings) {
 void CompilerExplorerOptionsWidget::on_toolButton_clicked() {
 	QString res = QFileDialog::getOpenFileName(this, tr("NodeJS"),
 	                                           QString(), tr("nodejs ") + "(nodejs**)");
+	ui->nodejsLocation->setText(res);
 }

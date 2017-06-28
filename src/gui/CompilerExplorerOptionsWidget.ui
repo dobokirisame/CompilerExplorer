@@ -24,7 +24,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="lineEdit"/>
+      <widget class="QLineEdit" name="nodejsLocation"/>
      </item>
      <item>
       <widget class="QToolButton" name="toolButton">

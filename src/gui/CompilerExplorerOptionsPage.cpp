@@ -12,16 +12,18 @@ CompilerExplorerOptionsPage::CompilerExplorerOptionsPage(QObject *parent)
 
 QWidget *CompilerExplorerOptionsPage::widget() {
 	if(!mWidget) {
-		mWidget = new CompilerExplorerOptionsWidget();
+		mWidget = new CompilerExplorerOptionsWidget;
 		mWidget->loadSettings(mSettings);
 	}
 	return  mWidget;
 }
 
 void CompilerExplorerOptionsPage::apply() {
-	mWidget->apply(mSettings);
+	if(mWidget)
+		mWidget->apply(mSettings);
 }
 
 void CompilerExplorerOptionsPage::finish() {
 	delete mWidget;
+	mWidget = nullptr;
 }
