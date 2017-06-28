@@ -3,18 +3,20 @@ DEFINES += COMPILEREXPLORER_LIBRARY
 # CompilerExplorer files
 
 SOURCES += \
-    ExplorerOutputPane.cpp \
     CompilerExplorerPlugin.cpp \
-    ExplorerOutputTable.cpp \
-    CompilerExplorerOptionsPage.cpp
+    gui/ExplorerOutputPane.cpp \
+    gui/ExplorerOutputTable.cpp \
+    gui/CompilerExplorerOptionsPage.cpp \
+    gui/CompilerExplorerOptionsWidget.cpp
 
 HEADERS += \
-    ExplorerOutputPane.h \
     compilerexplorerconstants.h \
     compilerexplorer_global.h \
     CompilerExplorerPlugin.h \
-    ExplorerOutputTable.h \
-    CompilerExplorerOptionsPage.h
+    gui/ExplorerOutputPane.h \
+    gui/ExplorerOutputTable.h \
+    gui/CompilerExplorerOptionsPage.h \
+    gui/CompilerExplorerOptionsWidget.h
 
 # Qt Creator linking
 
@@ -59,3 +61,6 @@ include (src.pri)
 
 DISTFILES += \
     src.pri
+
+FORMS += \
+    gui/CompilerExplorerOptionsWidget.ui

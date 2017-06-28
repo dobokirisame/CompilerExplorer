@@ -14,8 +14,8 @@
 #include <QMainWindow>
 #include <QMenu>
 
-#include "ExplorerOutputPane.h"
-#include "CompilerExplorerOptionsPage.h"
+#include "gui/ExplorerOutputPane.h"
+#include "gui/CompilerExplorerOptionsPage.h"
 
 namespace CompilerExplorer {
 namespace Internal {
