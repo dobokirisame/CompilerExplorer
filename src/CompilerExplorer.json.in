@@ -1,11 +1,11 @@
 {
-    \"Name\" : \"QCompilerExplorer\",
+    \"Name\" : \"CompilerExplorer\",
     \"Version\" : \"0.0.1\",
     \"CompatVersion\" : \"0.0.1\",
     \"Vendor\" : \"AndreySemenov\",
     \"Copyright\" : \"(C) Andrey Semenov\",
     \"License\" : \"MIT\",
-    \"Description\" : \"MIT\",
+    \"Description\" : \"Plugin based on https://github.com/mattgodbolt/compiler-explorer.\",
     \"Url\" : \"https://github.com/dobokirisame\",
     $$dependencyList
 }

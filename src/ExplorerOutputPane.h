@@ -2,12 +2,16 @@
 #define EXPLOREROUTPUTPANE_H
 #include <coreplugin/ioutputpane.h>
 
+class ExplorerOutputTable;
+
 class ExplorerOutputPane : public Core::IOutputPane
 {
 	Q_OBJECT
 public:
 	explicit ExplorerOutputPane(QObject *parent = 0);
-
+	~ExplorerOutputPane();
+public slots:
+	void runCompilerExplorer();
 public:
 	QWidget *outputWidget(QWidget *parent) override;
 	QList<QWidget *> toolBarWidgets() const override;
@@ -23,6 +27,8 @@ public:
 	bool canPrevious() const override;
 	void goToNext() override;
 	void goToPrev() override;
+private:
+	ExplorerOutputTable *mTableView;
 };
 
 #endif // EXPLOREROUTPUTPANE_H
