@@ -1,20 +1,20 @@
 #pragma once
 
-#include "qcompilerexplorer_global.h"
+#include "compilerexplorer_global.h"
 
 #include <extensionsystem/iplugin.h>
 
-namespace QCompilerExplorer {
+namespace CompilerExplorer {
 namespace Internal {
 
-class QCompilerExplorerPlugin : public ExtensionSystem::IPlugin
+class CompilerExplorerPlugin : public ExtensionSystem::IPlugin
 {
 	Q_OBJECT
-	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QtCreatorPlugin" FILE "QCompilerExplorer.json")
+	Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QtCreatorPlugin" FILE "CompilerExplorer.json")
 
 public:
-	QCompilerExplorerPlugin();
-	~QCompilerExplorerPlugin();
+	CompilerExplorerPlugin();
+	~CompilerExplorerPlugin();
 
 	bool initialize(const QStringList &arguments, QString *errorString);
 	void extensionsInitialized();

@@ -1,9 +1,0 @@
-#pragma once
-
-#include <QtGlobal>
-
-#if defined(QCOMPILEREXPLORER_LIBRARY)
-#  define QCOMPILEREXPLORERSHARED_EXPORT Q_DECL_EXPORT
-#else
-#  define QCOMPILEREXPLORERSHARED_EXPORT Q_DECL_IMPORT
-#endif

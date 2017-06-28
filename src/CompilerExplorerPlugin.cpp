@@ -1,5 +1,5 @@
-#include "qcompilerexplorerplugin.h"
-#include "qcompilerexplorerconstants.h"
+#include "CompilerExplorerPlugin.h"
+#include "compilerexplorerconstants.h"
 
 #include <coreplugin/icore.h>
 #include <coreplugin/icontext.h>
@@ -8,34 +8,31 @@
 #include <coreplugin/actionmanager/actioncontainer.h>
 #include <coreplugin/coreconstants.h>
 
+#include <projectexplorer/projectpanelfactory.h>
+
 #include <QAction>
 #include <QMessageBox>
 #include <QMainWindow>
 #include <QMenu>
 
-namespace QCompilerExplorer {
+#include "ExplorerOutputPane.h"
+
+namespace CompilerExplorer {
 namespace Internal {
 
-QCompilerExplorerPlugin::QCompilerExplorerPlugin()
+CompilerExplorerPlugin::CompilerExplorerPlugin()
 {
 	// Create your members
 }
 
-QCompilerExplorerPlugin::~QCompilerExplorerPlugin()
+CompilerExplorerPlugin::~CompilerExplorerPlugin()
 {
 	// Unregister objects from the plugin manager's object pool
 	// Delete members
 }
 
-bool QCompilerExplorerPlugin::initialize(const QStringList &arguments, QString *errorString)
+bool CompilerExplorerPlugin::initialize(const QStringList &arguments, QString *errorString)
 {
-	// Register objects in the plugin manager's object pool
-	// Load settings
-	// Add actions to menus
-	// Connect to other plugins' signals
-	// In the initialize function, a plugin can be sure that the plugins it
-	// depends on have initialized their members.
-
 	Q_UNUSED(arguments)
 	Q_UNUSED(errorString)
 
@@ -43,24 +40,36 @@ bool QCompilerExplorerPlugin::initialize(const QStringList &arguments, QString *
 	Core::Command *cmd = Core::ActionManager::registerAction(action, Constants::ACTION_ID,
 	                                                         Core::Context(Core::Constants::C_GLOBAL));
 	cmd->setDefaultKeySequence(QKeySequence(tr("Ctrl+Alt+Meta+A")));
-	connect(action, &QAction::triggered, this, &QCompilerExplorerPlugin::triggerAction);
+	connect(action, &QAction::triggered, this, &CompilerExplorerPlugin::triggerAction);
 
 	Core::ActionContainer *menu = Core::ActionManager::createMenu(Constants::MENU_ID);
 	menu->menu()->setTitle(tr("QCompilerExplorer"));
 	menu->addAction(cmd);
 	Core::ActionManager::actionContainer(Core::Constants::M_TOOLS)->addMenu(menu);
+	//	auto outPane = new ExplorerOutputPane(this);
+	//	addAutoReleasedObject(outPane);
 
+	auto panelFactory = new ProjectExplorer::ProjectPanelFactory;
+	panelFactory->setPriority(100);
+	panelFactory->setDisplayName(tr("Compile Explorer"));
+//	panelFactory->setCreateWidgetFunction([this, panelFactory](ProjectExplorer::Project *project) {
+//		auto widget = new TodoProjectSettingsWidget(project);
+//		connect(widget, &TodoProjectSettingsWidget::projectSettingsChanged,
+//		        m_todoItemsProvider, [this, project] { m_todoItemsProvider->projectSettingsChanged(project); });
+//		return widget;
+//	});
+	ProjectExplorer::ProjectPanelFactory::registerFactory(panelFactory);
 	return true;
 }
 
-void QCompilerExplorerPlugin::extensionsInitialized()
+void CompilerExplorerPlugin::extensionsInitialized()
 {
 	// Retrieve objects from the plugin manager's object pool
 	// In the extensionsInitialized function, a plugin can be sure that all
 	// plugins that depend on it are completely initialized.
 }
 
-ExtensionSystem::IPlugin::ShutdownFlag QCompilerExplorerPlugin::aboutToShutdown()
+ExtensionSystem::IPlugin::ShutdownFlag CompilerExplorerPlugin::aboutToShutdown()
 {
 	// Save settings
 	// Disconnect from signals that are not needed during shutdown
@@ -68,7 +77,7 @@ ExtensionSystem::IPlugin::ShutdownFlag QCompilerExplorerPlugin::aboutToShutdown(
 	return SynchronousShutdown;
 }
 
-void QCompilerExplorerPlugin::triggerAction()
+void CompilerExplorerPlugin::triggerAction()
 {
 	QMessageBox::information(Core::ICore::mainWindow(),
 	                         tr("Action Triggered"),
