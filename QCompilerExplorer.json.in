@@ -1,0 +1,11 @@
+{
+    \"Name\" : \"QCompilerExplorer\",
+    \"Version\" : \"0.0.1\",
+    \"CompatVersion\" : \"0.0.1\",
+    \"Vendor\" : \"AndreySemenov\",
+    \"Copyright\" : \"(C) Andrey Semenov\",
+    \"License\" : \"MIT\",
+    \"Description\" : \"MIT\",
+    \"Url\" : \"https://github.com/dobokirisame\",
+    $$dependencyList
+}
