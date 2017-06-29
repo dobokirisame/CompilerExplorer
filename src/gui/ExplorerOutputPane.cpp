@@ -6,13 +6,13 @@
 #include <QToolButton>
 #include <QLabel>
 #include <QDebug>
-
 namespace compilerExplorer {
 namespace gui{
 ExplorerOutputPane::ExplorerOutputPane(QObject *parent)
     : Core::IOutputPane(parent),
       mTableView(nullptr),
       mCompilerOptions(nullptr),
+      mRunButton(nullptr),
       mBinary(nullptr),
       mLabel(nullptr),
       mDirectives(nullptr),
@@ -29,6 +29,7 @@ ExplorerOutputPane::~ExplorerOutputPane() {
 	delete mDirectives;
 	delete mLabel;
 	delete mBinary;
+	delete mRunButton;
 	delete mCompilerOptions;
 	delete mTableView;
 }
@@ -48,7 +49,7 @@ QWidget *ExplorerOutputPane::outputWidget(QWidget *parent) {
 
 QList<QWidget *> ExplorerOutputPane::toolBarWidgets() const {
 	QList<QWidget *> result;
-	result << mCompilerOptions << mBinary << mLabel << mDirectives << mCommentOnly << mIntel;
+	result << mRunButton << mCompilerOptions << mBinary << mLabel << mDirectives << mCommentOnly << mIntel;
 	return result;
 }
 
@@ -107,6 +108,8 @@ void ExplorerOutputPane::createCompilerOptions() {
 }
 
 void ExplorerOutputPane::createButtons() {
+	mRunButton = createButton(tr("Run"),
+	             tr("Send request"),false);
 	mBinary = createButton(tr("11010"),
 	             tr("Compile to binary and disassemble the output"));
 	mLabel = createButton(tr(".LX0:"),
@@ -116,15 +119,24 @@ void ExplorerOutputPane::createButtons() {
 	mCommentOnly = createButton(tr("//"),
 	             tr("Remove all lines which are only comments from the output"));
 	mIntel = createButton(tr("Intel"),
-	             tr("Output disassembly in Intel syntax"));
+	                      tr("Output disassembly in Intel syntax"));
+	connect(mRunButton, &QToolButton::clicked, this, &ExplorerOutputPane::onRunClicked);
 }
 
-QToolButton * ExplorerOutputPane::createButton(const QString &text, const QString &tooltip) {
+QToolButton *ExplorerOutputPane::createButton(const QString &text, const QString &tooltip, bool checkable, const QIcon &icon) {
 	auto btn = new QToolButton;
 	btn->setText(text);
 	btn->setToolTip(tooltip);
-	btn->setCheckable(true);
+	btn->setCheckable(checkable);
+	if(!icon.isNull()) {
+		btn->setIcon(icon);
+		btn->setToolButtonStyle(Qt::ToolButtonIconOnly);
+	}
 	return btn;
+}
+
+void ExplorerOutputPane::onRunClicked() {
+	qDebug() << "run clicked";
 }
 
 }

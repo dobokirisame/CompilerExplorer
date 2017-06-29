@@ -1,6 +1,7 @@
 #ifndef EXPLOREROUTPUTPANE_H
 #define EXPLOREROUTPUTPANE_H
 #include <coreplugin/ioutputpane.h>
+#include <QIcon>
 
 class QToolButton;
 class QLineEdit;
@@ -35,10 +36,12 @@ private:
 	void createTableView();
 	void createCompilerOptions();
 	void createButtons();
-	QToolButton *createButton(const QString &text, const QString &tooltip);
+	QToolButton *createButton(const QString &text, const QString &tooltip,
+	                          bool checkable = true, const QIcon &icon = QIcon());
 private:
 	ExplorerOutputTable *mTableView;
 	QLineEdit *mCompilerOptions;
+	QToolButton *mRunButton;
 	QToolButton *mBinary;
 	QToolButton *mLabel;
 	QToolButton *mDirectives;

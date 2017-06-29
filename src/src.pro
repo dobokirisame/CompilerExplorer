@@ -7,7 +7,9 @@ SOURCES += \
     gui/ExplorerOutputPane.cpp \
     gui/ExplorerOutputTable.cpp \
     gui/CompilerExplorerOptionsPage.cpp \
-    gui/CompilerExplorerOptionsWidget.cpp
+    gui/CompilerExplorerOptionsWidget.cpp \
+    network/RequestSender.cpp \
+    network/Request.cpp
 
 HEADERS += \
     compilerexplorerconstants.h \
@@ -16,7 +18,9 @@ HEADERS += \
     gui/ExplorerOutputPane.h \
     gui/ExplorerOutputTable.h \
     gui/CompilerExplorerOptionsPage.h \
-    gui/CompilerExplorerOptionsWidget.h
+    gui/CompilerExplorerOptionsWidget.h \
+    network/RequestSender.h \
+    network/Request.h
 
 # Qt Creator linking
 
