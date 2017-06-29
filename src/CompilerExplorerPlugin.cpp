@@ -30,9 +30,7 @@ CompilerExplorerPlugin::CompilerExplorerPlugin()
 }
 
 CompilerExplorerPlugin::~CompilerExplorerPlugin() {
-//	mNodeJsServer->close();
-//	mNodeJsServer->kill();
-	qDebug() << mNodeJsServer->pid() << mNodeJsServer->processId();
+	mNodeJsServer->close();
 }
 
 bool CompilerExplorerPlugin::initialize(const QStringList &arguments, QString *errorString)
@@ -78,21 +76,12 @@ void CompilerExplorerPlugin::restartNodeJsServer() {
 	const auto nodeJsLocation = settings.value(constants::nodejsFileNameKey).toString();
 	const auto compilerExplorerLocation = settings.value(constants::compilerExplorerLocationKey,
 	                                                     QString()).toString();
-	qDebug() << mNodeJsServer->state();
 	mNodeJsServer->setProcessChannelMode(QProcess::ForwardedChannels);
 	if(mNodeJsServer->state() == QProcess::Running) {
 		mNodeJsServer->kill();
 	}
-//	/usr/bin/nodejs ./node_modules/.bin/supervisor -w app.js,lib,etc/config -e 'js|node|properties' --exec /usr/bin/node -- ./app.js --language C++
 	QStringList args;
-	args
-//	        << compilerExplorerLocation + "/node_modules/.bin/supervisor" <<
-//	        "-w" << compilerExplorerLocation +"/app.js,lib,etc/config" <<
-//	        "-e" << "\'js|node|properties\'" << "--exec"
-//	     << nodeJsLocation << "--"
-	        << compilerExplorerLocation +"/app.js" << "--language C++";
-	qDebug() << "result command:";
-	qDebug() << nodeJsLocation + " " + args.join(" ");
+	args << compilerExplorerLocation +"/app.js" << "--language C++";
 	mNodeJsServer->setWorkingDirectory(compilerExplorerLocation);
 	mNodeJsServer->start(nodeJsLocation + " " + args.join(" "));
 }
