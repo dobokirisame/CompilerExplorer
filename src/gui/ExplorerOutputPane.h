@@ -2,6 +2,8 @@
 #define EXPLOREROUTPUTPANE_H
 #include <coreplugin/ioutputpane.h>
 
+class QToolButton;
+class QLineEdit;
 namespace compilerExplorer {
 namespace gui{
 class ExplorerOutputTable;
@@ -30,7 +32,18 @@ public:
 	void goToNext() override;
 	void goToPrev() override;
 private:
+	void createTableView();
+	void createCompilerOptions();
+	void createButtons();
+	QToolButton *createButton(const QString &text, const QString &tooltip);
+private:
 	ExplorerOutputTable *mTableView;
+	QLineEdit *mCompilerOptions;
+	QToolButton *mBinary;
+	QToolButton *mLabel;
+	QToolButton *mDirectives;
+	QToolButton *mCommentOnly;
+	QToolButton *mIntel;
 };
 }
 }
