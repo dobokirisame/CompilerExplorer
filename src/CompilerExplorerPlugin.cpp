@@ -24,11 +24,15 @@ namespace core {
 
 CompilerExplorerPlugin::CompilerExplorerPlugin()
     : mOutputPane(nullptr),
-      mOptionsPage(nullptr) {
+      mOptionsPage(nullptr),
+      mNodeJsServer(nullptr) {
 
 }
 
 CompilerExplorerPlugin::~CompilerExplorerPlugin() {
+//	mNodeJsServer->close();
+//	mNodeJsServer->kill();
+	qDebug() << mNodeJsServer->pid() << mNodeJsServer->processId();
 }
 
 bool CompilerExplorerPlugin::initialize(const QStringList &arguments, QString *errorString)
@@ -57,6 +61,8 @@ bool CompilerExplorerPlugin::initialize(const QStringList &arguments, QString *e
 	connect(mOptionsPage, &gui::CompilerExplorerOptionsPage::settingsChanged,
 	        this, &CompilerExplorerPlugin::restartNodeJsServer);
 	addAutoReleasedObject(mOptionsPage);
+	mNodeJsServer = new QProcess(this);
+	restartNodeJsServer();
 	return true;
 }
 
@@ -70,10 +76,25 @@ ExtensionSystem::IPlugin::ShutdownFlag CompilerExplorerPlugin::aboutToShutdown()
 void CompilerExplorerPlugin::restartNodeJsServer() {
 	const auto &settings = mOptionsPage->settings();
 	const auto nodeJsLocation = settings.value(constants::nodejsFileNameKey).toString();
-	if(mNodeJsServer->state() != QProcess::NotRunning) {
+	const auto compilerExplorerLocation = settings.value(constants::compilerExplorerLocationKey,
+	                                                     QString()).toString();
+	qDebug() << mNodeJsServer->state();
+	mNodeJsServer->setProcessChannelMode(QProcess::ForwardedChannels);
+	if(mNodeJsServer->state() == QProcess::Running) {
 		mNodeJsServer->kill();
 	}
-	mNodeJsServer->start(nodeJsLocation);
+//	/usr/bin/nodejs ./node_modules/.bin/supervisor -w app.js,lib,etc/config -e 'js|node|properties' --exec /usr/bin/node -- ./app.js --language C++
+	QStringList args;
+	args
+//	        << compilerExplorerLocation + "/node_modules/.bin/supervisor" <<
+//	        "-w" << compilerExplorerLocation +"/app.js,lib,etc/config" <<
+//	        "-e" << "\'js|node|properties\'" << "--exec"
+//	     << nodeJsLocation << "--"
+	        << compilerExplorerLocation +"/app.js" << "--language C++";
+	qDebug() << "result command:";
+	qDebug() << nodeJsLocation + " " + args.join(" ");
+	mNodeJsServer->setWorkingDirectory(compilerExplorerLocation);
+	mNodeJsServer->start(nodeJsLocation + " " + args.join(" "));
 }
 
 }

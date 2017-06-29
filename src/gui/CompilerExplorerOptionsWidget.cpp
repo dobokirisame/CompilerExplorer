@@ -20,20 +20,36 @@ CompilerExplorerOptionsWidget::~CompilerExplorerOptionsWidget() {
 void CompilerExplorerOptionsWidget::loadSettings(const QSettings &settings) {
 	auto nodejsLocation = settings.value(constants::nodejsFileNameKey, QString()).toString();
 	ui->nodejsLocation->setText(nodejsLocation);
+	const auto compilerExplorerLocation = settings.value(constants::compilerExplorerLocationKey,
+	                                                     QString()).toString();
+	ui->compilerExplorerLocation->setText(compilerExplorerLocation);
 }
 
 void CompilerExplorerOptionsWidget::apply(QSettings &settings) {
+	qDebug() <<"apply";
 	const auto nodejsLocation = settings.value(constants::nodejsFileNameKey, QString()).toString();
+	const auto compilerExplorerLocation = settings.value(constants::compilerExplorerLocationKey,
+	                                                     QString()).toString();
 	settings.setValue(constants::nodejsFileNameKey,ui->nodejsLocation->text());
-	if(nodejsLocation != ui->nodejsLocation->text()) {
+	qDebug() <<"nodejsFileNameKey";
+	settings.setValue(constants::compilerExplorerLocationKey,ui->compilerExplorerLocation->text());
+	qDebug() <<"compilerExplorerLocationKey";
+	if((nodejsLocation != ui->nodejsLocation->text()) ||
+	        (compilerExplorerLocation != ui->compilerExplorerLocation->text()) ) {
 		emit settingsChanged();
 	}
+	qDebug() <<"apply finished";
 }
 
 void CompilerExplorerOptionsWidget::on_toolButton_clicked() {
 	QString res = QFileDialog::getOpenFileName(this, tr("NodeJS"),
-	                                           QString(), tr("nodejs ") + "(nodejs**)");
+	                                           QString(), tr("node ") + "(node**)");
 	ui->nodejsLocation->setText(res);
+}
+
+void CompilerExplorerOptionsWidget::on_toolButton_2_clicked() {
+	QString res = QFileDialog::getExistingDirectory(this);
+	ui->compilerExplorerLocation->setText(res);
 }
 }
 }
