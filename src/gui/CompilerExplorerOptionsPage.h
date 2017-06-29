@@ -16,6 +16,9 @@ public:
 	QWidget *widget() override;
 	void apply() override;
 	void finish() override;
+	QSettings &settings();
+signals:
+	void settingsChanged();
 private:
 	CompilerExplorerOptionsWidget *mWidget;
 	QSettings mSettings;

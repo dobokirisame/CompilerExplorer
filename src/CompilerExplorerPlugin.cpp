@@ -13,6 +13,8 @@
 #include <QAction>
 #include <QMainWindow>
 #include <QMenu>
+#include <QSettings>
+#include <QProcess>
 
 #include "gui/ExplorerOutputPane.h"
 #include "gui/CompilerExplorerOptionsPage.h"
@@ -21,14 +23,12 @@ namespace compilerExplorer {
 namespace core {
 
 CompilerExplorerPlugin::CompilerExplorerPlugin()
-{
-	// Create your members
+    : mOutputPane(nullptr),
+      mOptionsPage(nullptr) {
+
 }
 
-CompilerExplorerPlugin::~CompilerExplorerPlugin()
-{
-	// Unregister objects from the plugin manager's object pool
-	// Delete members
+CompilerExplorerPlugin::~CompilerExplorerPlugin() {
 }
 
 bool CompilerExplorerPlugin::initialize(const QStringList &arguments, QString *errorString)
@@ -53,8 +53,9 @@ bool CompilerExplorerPlugin::initialize(const QStringList &arguments, QString *e
 	panelFactory->setPriority(0);
 	panelFactory->setDisplayName(tr("Compile Explorer"));
 	ProjectExplorer::ProjectPanelFactory::registerFactory(panelFactory);
-
-	auto mOptionsPage = new gui::CompilerExplorerOptionsPage(this);
+	mOptionsPage = new gui::CompilerExplorerOptionsPage(this);
+	connect(mOptionsPage, &gui::CompilerExplorerOptionsPage::settingsChanged,
+	        this, &CompilerExplorerPlugin::restartNodeJsServer);
 	addAutoReleasedObject(mOptionsPage);
 	return true;
 }
@@ -66,6 +67,14 @@ ExtensionSystem::IPlugin::ShutdownFlag CompilerExplorerPlugin::aboutToShutdown()
 	return SynchronousShutdown;
 }
 
+void CompilerExplorerPlugin::restartNodeJsServer() {
+	const auto &settings = mOptionsPage->settings();
+	const auto nodeJsLocation = settings.value(constants::nodejsFileNameKey).toString();
+	if(mNodeJsServer->state() != QProcess::NotRunning) {
+		mNodeJsServer->kill();
+	}
+	mNodeJsServer->start(nodeJsLocation);
+}
 
-} // namespace Internal
-} // namespace QCompilerExplorer
+}
+}

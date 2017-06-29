@@ -4,9 +4,11 @@
 
 #include <extensionsystem/iplugin.h>
 
+class QProcess;
 namespace compilerExplorer {
 namespace gui {
 class ExplorerOutputPane;
+class CompilerExplorerOptionsPage;
 }
 namespace core {
 
@@ -22,8 +24,13 @@ public:
 	bool initialize(const QStringList &arguments, QString *errorString);
 	void extensionsInitialized();
 	ShutdownFlag aboutToShutdown();
+
+private:
+	void restartNodeJsServer();
 private:
 	gui::ExplorerOutputPane *mOutputPane;
+	gui::CompilerExplorerOptionsPage *mOptionsPage;
+	QProcess *mNodeJsServer;
 };
 
 } // namespace Internal

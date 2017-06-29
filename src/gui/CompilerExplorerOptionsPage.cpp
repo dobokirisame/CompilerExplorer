@@ -1,5 +1,7 @@
 #include "CompilerExplorerOptionsPage.h"
 #include "CompilerExplorerOptionsWidget.h"
+#include <QSettings>
+
 namespace compilerExplorer {
 namespace gui{
 CompilerExplorerOptionsPage::CompilerExplorerOptionsPage(QObject *parent)
@@ -15,6 +17,7 @@ QWidget *CompilerExplorerOptionsPage::widget() {
 	if(!mWidget) {
 		mWidget = new CompilerExplorerOptionsWidget;
 		mWidget->loadSettings(mSettings);
+		connect(mWidget, SIGNAL(settingsChanged()), this, SIGNAL(settingsChanged()));
 	}
 	return  mWidget;
 }
@@ -25,8 +28,13 @@ void CompilerExplorerOptionsPage::apply() {
 }
 
 void CompilerExplorerOptionsPage::finish() {
+	disconnect(mWidget, SIGNAL(settingsChanged()), this, SIGNAL(settingsChanged()));
 	delete mWidget;
 	mWidget = nullptr;
+}
+
+QSettings &CompilerExplorerOptionsPage::settings() {
+	return mSettings;
 }
 }
 }

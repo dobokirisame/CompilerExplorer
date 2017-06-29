@@ -18,9 +18,10 @@ public:
 	~CompilerExplorerOptionsWidget();
 	void loadSettings(const QSettings &settings);
 	void apply(QSettings &settings);
+signals:
+	void settingsChanged();
 private slots:
 	void on_toolButton_clicked();
-
 private:
 	Ui::CompilerExplorerOptionsWidget *ui;
 };
