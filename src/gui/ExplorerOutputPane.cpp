@@ -2,7 +2,8 @@
 #include "ExplorerOutputTable.h"
 #include <QMessageBox>
 #include <coreplugin/icore.h>
-
+namespace compilerExplorer {
+namespace gui{
 ExplorerOutputPane::ExplorerOutputPane(QObject *parent)
     : Core::IOutputPane(parent) {
 	mTableView = new ExplorerOutputTable();
@@ -71,4 +72,6 @@ void ExplorerOutputPane::goToNext() {
 }
 
 void ExplorerOutputPane::goToPrev() {
+}
+}
 }

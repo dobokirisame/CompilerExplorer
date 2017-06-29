@@ -3,6 +3,8 @@
 #include <coreplugin/dialogs/ioptionspage.h>
 #include <QSettings>
 
+namespace compilerExplorer {
+namespace gui{
 class CompilerExplorerOptionsWidget;
 class CompilerExplorerOptionsPage : public Core::IOptionsPage
 {
@@ -18,5 +20,6 @@ private:
 	CompilerExplorerOptionsWidget *mWidget;
 	QSettings mSettings;
 };
-
+}
+}
 #endif // COMPILEREXPLOREROPTIONSPAGE_H

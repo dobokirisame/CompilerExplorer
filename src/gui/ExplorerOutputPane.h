@@ -2,6 +2,8 @@
 #define EXPLOREROUTPUTPANE_H
 #include <coreplugin/ioutputpane.h>
 
+namespace compilerExplorer {
+namespace gui{
 class ExplorerOutputTable;
 
 class ExplorerOutputPane : public Core::IOutputPane
@@ -30,5 +32,6 @@ public:
 private:
 	ExplorerOutputTable *mTableView;
 };
-
+}
+}
 #endif // EXPLOREROUTPUTPANE_H

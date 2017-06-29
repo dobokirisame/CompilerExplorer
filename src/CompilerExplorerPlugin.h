@@ -4,8 +4,11 @@
 
 #include <extensionsystem/iplugin.h>
 
-namespace CompilerExplorer {
-namespace Internal {
+namespace compilerExplorer {
+namespace gui {
+class ExplorerOutputPane;
+}
+namespace core {
 
 class CompilerExplorerPlugin : public ExtensionSystem::IPlugin
 {
@@ -19,6 +22,8 @@ public:
 	bool initialize(const QStringList &arguments, QString *errorString);
 	void extensionsInitialized();
 	ShutdownFlag aboutToShutdown();
+private:
+	gui::ExplorerOutputPane *mOutputPane;
 };
 
 } // namespace Internal

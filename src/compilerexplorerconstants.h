@@ -1,10 +1,12 @@
 #pragma once
+#include <QString>
 
-namespace CompilerExplorer {
-namespace Constants {
+namespace compilerExplorer {
+namespace constants {
 
-constexpr char ACTION_ID[] = "CompilerExplorer.Action";
-constexpr char MENU_ID[] = "CompilerExplorer.Menu";
+const char ACTION_ID[] = "CompilerExplorer.Action";
+const char MENU_ID[] = "CompilerExplorer.Menu";
+const QString nodejsFileNameKey = "nodejsFileName";
 
 } // namespace QCompilerExplorer
 } // namespace Constants

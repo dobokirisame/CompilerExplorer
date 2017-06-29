@@ -1,6 +1,7 @@
 #include "CompilerExplorerOptionsPage.h"
 #include "CompilerExplorerOptionsWidget.h"
-
+namespace compilerExplorer {
+namespace gui{
 CompilerExplorerOptionsPage::CompilerExplorerOptionsPage(QObject *parent)
     : Core::IOptionsPage(parent),
       mWidget(nullptr) {
@@ -26,4 +27,6 @@ void CompilerExplorerOptionsPage::apply() {
 void CompilerExplorerOptionsPage::finish() {
 	delete mWidget;
 	mWidget = nullptr;
+}
+}
 }

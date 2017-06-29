@@ -17,8 +17,8 @@
 #include "gui/ExplorerOutputPane.h"
 #include "gui/CompilerExplorerOptionsPage.h"
 
-namespace CompilerExplorer {
-namespace Internal {
+namespace compilerExplorer {
+namespace core {
 
 CompilerExplorerPlugin::CompilerExplorerPlugin()
 {
@@ -36,15 +36,15 @@ bool CompilerExplorerPlugin::initialize(const QStringList &arguments, QString *e
 	Q_UNUSED(arguments)
 	Q_UNUSED(errorString)
 
-	auto outPane = new ExplorerOutputPane(this);
-	addAutoReleasedObject(outPane);
+	mOutputPane = new gui::ExplorerOutputPane(this);
+	addAutoReleasedObject(mOutputPane);
 
 	auto action = new QAction(tr("Run Compiler Explorer"), this);
-	Core::Command *cmd = Core::ActionManager::registerAction(action, Constants::ACTION_ID,
+	Core::Command *cmd = Core::ActionManager::registerAction(action, constants::ACTION_ID,
 	                                                         Core::Context(Core::Constants::C_GLOBAL));
-	connect(action, &QAction::triggered, outPane, &ExplorerOutputPane::runCompilerExplorer);
+	connect(action, &QAction::triggered, mOutputPane, &gui::ExplorerOutputPane::runCompilerExplorer);
 
-	Core::ActionContainer *menu = Core::ActionManager::createMenu(Constants::MENU_ID);
+	Core::ActionContainer *menu = Core::ActionManager::createMenu(constants::MENU_ID);
 	menu->menu()->setTitle(tr("Compiler Explorer"));
 	menu->addAction(cmd);
 	Core::ActionManager::actionContainer(Core::Constants::M_TOOLS)->addMenu(menu);
@@ -54,7 +54,7 @@ bool CompilerExplorerPlugin::initialize(const QStringList &arguments, QString *e
 	panelFactory->setDisplayName(tr("Compile Explorer"));
 	ProjectExplorer::ProjectPanelFactory::registerFactory(panelFactory);
 
-	auto mOptionsPage = new CompilerExplorerOptionsPage(this);
+	auto mOptionsPage = new gui::CompilerExplorerOptionsPage(this);
 	addAutoReleasedObject(mOptionsPage);
 	return true;
 }

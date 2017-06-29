@@ -7,7 +7,8 @@
 namespace Ui {
 class CompilerExplorerOptionsWidget;
 }
-
+namespace compilerExplorer {
+namespace gui{
 class CompilerExplorerOptionsWidget : public QWidget
 {
 	Q_OBJECT
@@ -23,5 +24,6 @@ private slots:
 private:
 	Ui::CompilerExplorerOptionsWidget *ui;
 };
-
+}
+}
 #endif // COMPILEREXPLOREROPTIONSWIDGET_H
