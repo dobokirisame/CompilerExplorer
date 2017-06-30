@@ -23,6 +23,9 @@ QByteArray RequestSender::sendRequest(Request *request) const {
 
 	QEventLoop loop;
 	auto reply = request->sendRequest(mManager);
+	qDebug() << "reply == nullptr" << (reply == nullptr);
+	if(!reply)
+		return {};
 	connect(reply.get(), &QNetworkReply::finished, &loop, &QEventLoop::quit);
 	connect(&timer, &QTimer::timeout, reply.get(), &QNetworkReply::abort);
 	timer.start();

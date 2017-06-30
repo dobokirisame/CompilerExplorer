@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QDebug>
 #include "network/RequestSender.h"
+#include "network/GetRequest.h"
 
 namespace compilerExplorer {
 namespace gui{
@@ -141,8 +142,10 @@ QToolButton *ExplorerOutputPane::createButton(const QString &text, const QString
 void ExplorerOutputPane::onRunClicked() {
 	if(!mRequestSender)
 		return;
-//	qDebug() << mRequestSender->sendRequest();
-	qDebug() << "run clicked";
+	network::GetRequest request;
+	request.setAddress("http://localhost:10240/api/compilers");
+	request.setPort(10240);
+	qDebug() << "request reply" << mRequestSender->sendRequest(&request);
 }
 
 }

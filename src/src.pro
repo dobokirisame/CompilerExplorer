@@ -9,7 +9,8 @@ SOURCES += \
     gui/CompilerExplorerOptionsPage.cpp \
     gui/CompilerExplorerOptionsWidget.cpp \
     network/RequestSender.cpp \
-    network/Request.cpp
+    network/Request.cpp \
+    network/GetRequest.cpp
 
 HEADERS += \
     compilerexplorerconstants.h \
@@ -20,7 +21,8 @@ HEADERS += \
     gui/CompilerExplorerOptionsPage.h \
     gui/CompilerExplorerOptionsWidget.h \
     network/RequestSender.h \
-    network/Request.h
+    network/Request.h \
+    network/GetRequest.h
 
 # Qt Creator linking
 
