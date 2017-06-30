@@ -76,6 +76,7 @@ int ExplorerOutputPane::priorityInStatusBar() const {
 }
 
 void ExplorerOutputPane::clearContents() {
+	mExplorer->clear();
 }
 
 void ExplorerOutputPane::visibilityChanged(bool visible) {
