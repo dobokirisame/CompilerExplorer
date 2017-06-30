@@ -1,5 +1,5 @@
-include (src.pri)
 DEFINES += COMPILEREXPLORER_LIBRARY
+include (src.pri)
 
 isEmpty(IDE_SOURCE_TREE): IDE_SOURCE_TREE = $$QTC_SOURCE
 isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = $$QTC_BUILD
@@ -48,3 +48,5 @@ HEADERS += \
 
 FORMS += \
     gui/CompilerExplorerOptionsWidget.ui
+
+LISB +=-L$$IDE_BUILD_TREE/bin
