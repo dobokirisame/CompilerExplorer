@@ -5,6 +5,7 @@
 
 class QToolButton;
 class QLineEdit;
+class QTextEdit;
 namespace compilerExplorer {
 namespace network {
 class RequestSender;
@@ -44,7 +45,8 @@ private:
 private slots:
 	void onRunClicked();
 private:
-	ExplorerOutputTable *mTableView;
+//	ExplorerOutputTable *mTableView;
+	QTextEdit *mExplorer;
 	QLineEdit *mCompilerOptions;
 	QToolButton *mRunButton;
 	QToolButton *mBinary;

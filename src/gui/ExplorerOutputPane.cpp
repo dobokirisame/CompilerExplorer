@@ -7,6 +7,7 @@
 #include <QLabel>
 #include <QDebug>
 #include <QTextCodec>
+#include <QTextEdit>
 
 #include "network/RequestSender.h"
 #include "network/GetRequest.h"
@@ -19,7 +20,8 @@ namespace compilerExplorer {
 namespace gui{
 ExplorerOutputPane::ExplorerOutputPane(QObject *parent)
     : Core::IOutputPane(parent),
-      mTableView(nullptr),
+//      mTableView(nullptr),
+      mExplorer(nullptr),
       mCompilerOptions(nullptr),
       mRunButton(nullptr),
       mBinary(nullptr),
@@ -41,7 +43,8 @@ ExplorerOutputPane::~ExplorerOutputPane() {
 	delete mBinary;
 	delete mRunButton;
 	delete mCompilerOptions;
-	delete mTableView;
+//	delete mTableView;
+	delete mExplorer;
 }
 
 void ExplorerOutputPane::runCompilerExplorer() {
@@ -54,7 +57,8 @@ void ExplorerOutputPane::runCompilerExplorer() {
 
 QWidget *ExplorerOutputPane::outputWidget(QWidget *parent) {
 	Q_UNUSED(parent);
-	return mTableView;
+//	return mTableView;
+	return mExplorer;
 }
 
 QList<QWidget *> ExplorerOutputPane::toolBarWidgets() const {
@@ -79,11 +83,13 @@ void ExplorerOutputPane::visibilityChanged(bool visible) {
 }
 
 void ExplorerOutputPane::setFocus() {
-	mTableView->setFocus();
+//	mTableView->setFocus();
+	mExplorer->setFocus();
 }
 
 bool ExplorerOutputPane::hasFocus() const{
-	return mTableView->window()->focusWidget() == mTableView;
+//	return mTableView->window()->focusWidget() == mTableView;
+	return mExplorer->window()->focusWidget() == mExplorer;
 }
 
 bool ExplorerOutputPane::canFocus() const {
@@ -109,7 +115,8 @@ void ExplorerOutputPane::goToPrev() {
 }
 
 void ExplorerOutputPane::createTableView() {
-	mTableView = new ExplorerOutputTable();
+	mExplorer = new QTextEdit();
+//	mTableView = new ExplorerOutputTable();
 }
 
 void ExplorerOutputPane::createCompilerOptions() {
@@ -156,8 +163,10 @@ void ExplorerOutputPane::onRunClicked() {
 	request.addParameter("options", mCompilerOptions->text());
 	Core::EditorManager::currentDocument()->filePath().toString();
 	request.addParameter("source",  QTextCodec::codecForMib(106)->toUnicode(Core::EditorManager::currentDocument()->contents()));
-	qDebug() << "request reply" << mRequestSender->sendRequest(&request);
-
+	auto reply = mRequestSender->sendRequest(&request);
+	qDebug() << "request reply" << reply;
+	mExplorer->clear();
+	mExplorer->setText(QTextCodec::codecForMib(106)->toUnicode(reply));
 }
 
 }
