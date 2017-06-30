@@ -117,6 +117,7 @@ void ExplorerOutputPane::goToPrev() {
 
 void ExplorerOutputPane::createTableView() {
 	mExplorer = new QTextEdit();
+	mExplorer->setReadOnly(true);
 //	mTableView = new ExplorerOutputTable();
 }
 
