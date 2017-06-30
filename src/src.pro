@@ -10,7 +10,8 @@ SOURCES += \
     gui/CompilerExplorerOptionsWidget.cpp \
     network/RequestSender.cpp \
     network/Request.cpp \
-    network/GetRequest.cpp
+    network/GetRequest.cpp \
+    network/PostJsonRequest.cpp
 
 HEADERS += \
     compilerexplorerconstants.h \
@@ -22,7 +23,8 @@ HEADERS += \
     gui/CompilerExplorerOptionsWidget.h \
     network/RequestSender.h \
     network/Request.h \
-    network/GetRequest.h
+    network/GetRequest.h \
+    network/PostJsonRequest.h
 
 # Qt Creator linking
 
