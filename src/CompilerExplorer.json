@@ -8,7 +8,7 @@
     "Description" : "Plugin based on https://github.com/mattgodbolt/compiler-explorer.",
     "Url" : "https://github.com/dobokirisame",
     "Dependencies" : [
-        { "Name" : "Core", "Version" : "4.3.0" },
-        { "Name" : "ProjectExplorer", "Version" : "4.3.0" }
+        { "Name" : "Core", "Version" : "4.2.1" },
+        { "Name" : "ProjectExplorer", "Version" : "4.2.1" }
     ]
 }
