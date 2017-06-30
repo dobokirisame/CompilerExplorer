@@ -11,8 +11,7 @@ Some of functions doesn't work(asm representations)
 Use at your own risk)
 
 ----------
-**Instruction**
-
+> **Instruction**
 >Install NodeJS
 >Clone and make compiler-explorer (https://github.com/mattgodbolt/compiler-explorer)
 >Build plugin with Qt your QtCreator based on (Help->About QtCreator)
