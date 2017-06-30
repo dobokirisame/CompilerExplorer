@@ -1,3 +1,6 @@
+exists(qt_deps.pri) {
+    include (qt_deps.pri)
+}
 PROJECT_ROOT = $$PWD/..
 
 CONFIG(debug, debug|release) {
