@@ -18,5 +18,4 @@ Use at your own risk)
 >Build plugin with Qt your QtCreator based on (Help->About QtCreator)
 >Install library in your QtCreator plugins directory
 >Turn on in plugins list
-
-
+>
