@@ -8,6 +8,7 @@
 #include <QDebug>
 #include "network/RequestSender.h"
 #include "network/GetRequest.h"
+#include "network/PostJsonRequest.h"
 
 namespace compilerExplorer {
 namespace gui{
@@ -142,9 +143,13 @@ QToolButton *ExplorerOutputPane::createButton(const QString &text, const QString
 void ExplorerOutputPane::onRunClicked() {
 	if(!mRequestSender)
 		return;
-	network::GetRequest request;
-	request.setAddress("http://localhost:10240/api/compilers");
+	network::PostJsonRequest request;
+//	request.setAddress("http://localhost:10240");
+	request.setAddress("http://localhost:10240/api/compiler/%2Fusr%2Fbin%2Fclang%2B%2B/compile");
 	request.setPort(10240);
+	request.addParameter("compiler", "usr/bin/clang++");
+	request.addParameter("options", "-std=c++1y -O3");
+	request.addParameter("source", "int main(int argc, char* argv[]) { return 1; }");
 	qDebug() << "request reply" << mRequestSender->sendRequest(&request);
 }
 

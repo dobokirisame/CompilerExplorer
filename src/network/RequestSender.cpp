@@ -20,7 +20,6 @@ QByteArray RequestSender::sendRequest(Request *request) const {
 	QTimer timer;
 	timer.setInterval(timeout);
 	timer.setSingleShot(true);
-
 	QEventLoop loop;
 	auto reply = request->sendRequest(mManager);
 	qDebug() << "reply == nullptr" << (reply == nullptr);
@@ -34,6 +33,9 @@ QByteArray RequestSender::sendRequest(Request *request) const {
 	QByteArray result;
 	if (reply->isFinished() && reply->error() == QNetworkReply::NoError) {
 		result = reply->readAll();
+	}
+	else if(reply->error() != QNetworkReply::NoError) {
+		qDebug() << reply->errorString();
 	}
 	return result;
 }
