@@ -113,7 +113,7 @@ void ExplorerOutputPane::createTableView() {
 }
 
 void ExplorerOutputPane::createCompilerOptions() {
-	mCompilerOptions = new QLineEdit();
+	mCompilerOptions = new QLineEdit("-std=c++1y -O3");
 	mCompilerOptions->setPlaceholderText(tr("Compiler options..."));
 }
 
@@ -153,14 +153,11 @@ void ExplorerOutputPane::onRunClicked() {
 	request.setAddress("http://localhost:10240/api/compiler/%2Fusr%2Fbin%2Fclang%2B%2B/compile");
 	request.setPort(10240);
 	request.addParameter("compiler", "usr/bin/clang++");
-	request.addParameter("options", "-std=c++1y -O3");
+	request.addParameter("options", mCompilerOptions->text());
 	Core::EditorManager::currentDocument()->filePath().toString();
-	QFile currentFile(Core::EditorManager::currentDocument()->filePath().toString());
-	currentFile.open(QFile::ReadOnly);
-	qDebug() << currentFile.fileName();
-	request.addParameter("source",  QTextCodec::codecForMib(106)->toUnicode(currentFile.readAll()));
-	currentFile.close();
+	request.addParameter("source",  QTextCodec::codecForMib(106)->toUnicode(Core::EditorManager::currentDocument()->contents()));
 	qDebug() << "request reply" << mRequestSender->sendRequest(&request);
+
 }
 
 }
