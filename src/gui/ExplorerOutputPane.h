@@ -6,6 +6,9 @@
 class QToolButton;
 class QLineEdit;
 namespace compilerExplorer {
+namespace network {
+class RequestSender;
+}
 namespace gui{
 class ExplorerOutputTable;
 
@@ -38,6 +41,8 @@ private:
 	void createButtons();
 	QToolButton *createButton(const QString &text, const QString &tooltip,
 	                          bool checkable = true, const QIcon &icon = QIcon());
+private slots:
+	void onRunClicked();
 private:
 	ExplorerOutputTable *mTableView;
 	QLineEdit *mCompilerOptions;
@@ -47,6 +52,7 @@ private:
 	QToolButton *mDirectives;
 	QToolButton *mCommentOnly;
 	QToolButton *mIntel;
+	network::RequestSender *mRequestSender;
 };
 }
 }

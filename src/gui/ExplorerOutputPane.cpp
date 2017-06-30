@@ -6,6 +6,8 @@
 #include <QToolButton>
 #include <QLabel>
 #include <QDebug>
+#include "network/RequestSender.h"
+
 namespace compilerExplorer {
 namespace gui{
 ExplorerOutputPane::ExplorerOutputPane(QObject *parent)
@@ -17,7 +19,8 @@ ExplorerOutputPane::ExplorerOutputPane(QObject *parent)
       mLabel(nullptr),
       mDirectives(nullptr),
       mCommentOnly(nullptr),
-      mIntel(nullptr) {
+      mIntel(nullptr),
+      mRequestSender(new network::RequestSender(this)){
 	createTableView();
 	createCompilerOptions();
 	createButtons();
@@ -109,7 +112,7 @@ void ExplorerOutputPane::createCompilerOptions() {
 
 void ExplorerOutputPane::createButtons() {
 	mRunButton = createButton(tr("Run"),
-	             tr("Send request"),false);
+	             tr("Send request"), false);
 	mBinary = createButton(tr("11010"),
 	             tr("Compile to binary and disassemble the output"));
 	mLabel = createButton(tr(".LX0:"),
@@ -136,6 +139,9 @@ QToolButton *ExplorerOutputPane::createButton(const QString &text, const QString
 }
 
 void ExplorerOutputPane::onRunClicked() {
+	if(!mRequestSender)
+		return;
+//	qDebug() << mRequestSender->sendRequest();
 	qDebug() << "run clicked";
 }
 

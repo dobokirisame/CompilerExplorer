@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-
+class QNetworkAccessManager;
 namespace compilerExplorer {
 namespace network{
 class Request;
@@ -14,12 +14,9 @@ class RequestSender : public QObject
 public:
 	explicit RequestSender(QObject *parent = nullptr);
 public slots:
-	QByteArray get(Request& request);
-	QByteArray post(Request& request);
-
-signals:
-
-public slots:
+	QByteArray sendRequest(Request *request) const;
+private:
+	QNetworkAccessManager *mManager;
 };
 }
 }

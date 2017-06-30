@@ -15,6 +15,8 @@
 #include <QMenu>
 #include <QSettings>
 #include <QProcess>
+#include <QFile>
+#include <QDir>
 
 #include "gui/ExplorerOutputPane.h"
 #include "gui/CompilerExplorerOptionsPage.h"
@@ -80,6 +82,8 @@ void CompilerExplorerPlugin::restartNodeJsServer() {
 	if(mNodeJsServer->state() == QProcess::Running) {
 		mNodeJsServer->kill();
 	}
+	if(!QFile(nodeJsLocation).exists() || !QDir(compilerExplorerLocation).exists())
+		return;
 	QStringList args;
 	args << compilerExplorerLocation +"/app.js" << "--language C++";
 	mNodeJsServer->setWorkingDirectory(compilerExplorerLocation);
