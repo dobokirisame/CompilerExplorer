@@ -6,9 +6,14 @@
 #include <QToolButton>
 #include <QLabel>
 #include <QDebug>
+#include <QTextCodec>
+
 #include "network/RequestSender.h"
 #include "network/GetRequest.h"
 #include "network/PostJsonRequest.h"
+
+#include <coreplugin/editormanager/editormanager.h>
+#include <coreplugin/editormanager/ieditor.h>
 
 namespace compilerExplorer {
 namespace gui{
@@ -149,7 +154,12 @@ void ExplorerOutputPane::onRunClicked() {
 	request.setPort(10240);
 	request.addParameter("compiler", "usr/bin/clang++");
 	request.addParameter("options", "-std=c++1y -O3");
-	request.addParameter("source", "int main(int argc, char* argv[]) { return 1; }");
+	Core::EditorManager::currentDocument()->filePath().toString();
+	QFile currentFile(Core::EditorManager::currentDocument()->filePath().toString());
+	currentFile.open(QFile::ReadOnly);
+	qDebug() << currentFile.fileName();
+	request.addParameter("source",  QTextCodec::codecForMib(106)->toUnicode(currentFile.readAll()));
+	currentFile.close();
 	qDebug() << "request reply" << mRequestSender->sendRequest(&request);
 }
 
