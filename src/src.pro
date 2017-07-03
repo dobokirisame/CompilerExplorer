@@ -1,13 +1,12 @@
 DEFINES += COMPILEREXPLORER_LIBRARY
-include (src.pri)
+exists(qt_deps.pri) {
+    include (qt_deps.pri)
+}
+QTC_PLUGIN_NAME = CompilerExplorer
 
 isEmpty(IDE_SOURCE_TREE): IDE_SOURCE_TREE = $$QTC_SOURCE
 isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = $$QTC_BUILD
 
-USE_USER_DESTDIR = no
-
-
-QTC_PLUGIN_NAME = CompilerExplorer
 QTC_LIB_DEPENDS += \
     extensionsystem
 
@@ -15,9 +14,14 @@ QTC_PLUGIN_DEPENDS += \
     coreplugin \
     projectexplorer
 
-QTC_PLUGIN_RECOMMENDS += \
-
 include($$IDE_SOURCE_TREE/src/qtcreatorplugin.pri)
+
+include (src.pri)
+
+
+USE_USER_DESTDIR = YES
+
+QT += network
 
 DISTFILES += \
     src.pri

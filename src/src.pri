@@ -1,11 +1,8 @@
-exists(qt_deps.pri) {
-    include (qt_deps.pri)
-}
 PROJECT_ROOT = $$PWD/..
 
 CONFIG(debug, debug|release) {
         DIR_OUTPUT = $$PROJECT_ROOT/build/debug
-        DEFINES += QCOMPILER_EXPLORER_DEBUG
+        DEFINES += COMPILER_EXPLORER_DEBUG
 }
 CONFIG(release, debug|release) {
         DIR_OUTPUT = $$PROJECT_ROOT/build/release

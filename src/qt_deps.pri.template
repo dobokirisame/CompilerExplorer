@@ -1,2 +1,2 @@
-IDE_SOURCE_TREE = "C:\\Projects\\qt-creator-opensource-src-4.2.1\\"
-IDE_BUILD_TREE = "/c/msys64/mingw64/opt/qt/Tools/QtCreator/"
+QTC_SOURCE = "C:\\Projects\\qt-creator-opensource-src-4.2.1\\"
+QTC_BUILD = "/c/msys64/mingw64/opt/qt/Tools/QtCreator/"

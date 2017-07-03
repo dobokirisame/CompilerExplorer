@@ -14,7 +14,6 @@ class Request
 public:
 	Request();
 	virtual ~Request();
-//	virtual QNetworkRequest *request() = 0;
 	virtual std::unique_ptr<QNetworkReply> sendRequest(QNetworkAccessManager *manager) = 0;
 	QString address() const;
 	void setAddress(const QString &address);
