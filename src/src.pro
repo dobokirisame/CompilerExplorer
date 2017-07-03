@@ -3,7 +3,6 @@ exists(qt_deps.pri) {
     include (qt_deps.pri)
 }
 QTC_PLUGIN_NAME = CompilerExplorer
-
 isEmpty(IDE_SOURCE_TREE): IDE_SOURCE_TREE = $$QTC_SOURCE
 isEmpty(IDE_BUILD_TREE): IDE_BUILD_TREE = $$QTC_BUILD
 

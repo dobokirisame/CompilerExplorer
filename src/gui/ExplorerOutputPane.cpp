@@ -155,13 +155,16 @@ QToolButton *ExplorerOutputPane::createButton(const QString &text, const QString
 }
 
 void ExplorerOutputPane::onRunClicked() {
+	//TODO: move all request genereation to separate class
 	if(!mRequestSender)
 		return;
 	network::PostJsonRequest request;
 //	request.setAddress("http://localhost:10240");
-	request.setAddress("http://localhost:10240/api/compiler/%2Fusr%2Fbin%2Fclang%2B%2B/compile");
+//	request.setAddress("http://localhost:10240/api/compiler/%2Fusr%2Fbin%2Fclang%2B%2B/compile");
+	request.setAddress("http://localhost:10240/api/compiler/%2Fmingw64%2Fbin%2Fgcc/compile");
 	request.setPort(10240);
-	request.addParameter("compiler", "usr/bin/clang++");
+	request.addParameter("compiler",  "/mingw64/bin/gcc");
+//	                     "usr/bin/clang++");
 	request.addParameter("options", mCompilerOptions->text());
 	Core::EditorManager::currentDocument()->filePath().toString();
 	request.addParameter("source",  QTextCodec::codecForMib(106)->toUnicode(Core::EditorManager::currentDocument()->contents()));
