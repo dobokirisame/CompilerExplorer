@@ -5,6 +5,8 @@
 namespace compilerExplorer {
 namespace network{
 
+const QString filtersKey = "filters";
+
 PostJsonRequest::PostJsonRequest()
     : GetRequest() {
 
@@ -26,7 +28,22 @@ QJsonObject PostJsonRequest::jsonRequest() const {
 	for(const auto &param : parameters()) {
 		result.insert(param.first, param.second);
 	}
+	if(!filters().isEmpty()) {
+		QJsonObject enabledFilters;
+		for(auto filter : filters()) {
+			enabledFilters.insert(filter, "true");
+		}
+		result.insert(filtersKey, enabledFilters);
+	}
 	return result;
+}
+
+QStringList PostJsonRequest::filters() const {
+	return mFilters;
+}
+
+void PostJsonRequest::setFilters(const QStringList &filters) {
+	mFilters = filters;
 }
 }
 }
