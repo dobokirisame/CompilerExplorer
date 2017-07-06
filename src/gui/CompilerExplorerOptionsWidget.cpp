@@ -26,6 +26,9 @@ void CompilerExplorerOptionsWidget::loadSettings(const QSettings &settings) {
 	const auto useLocalServer = settings.value(constants::useLocalServerKey, true).toBool();
 	ui->useLocalServerButton->setChecked(useLocalServer);
 	ui->useRemoteServer->setChecked(!useLocalServer);
+	const auto localPort = settings.value(constants::localServerPortKey,
+	                                            10240).toInt();
+	ui->localPort->setValue(localPort);
 	const auto remoteServerUrl = settings.value(constants::remoteServerUrlKey,
 	                                            QString("https://gcc.godbolt.org/")).toString();
 	ui->remoteServerUrl->setText(remoteServerUrl);
@@ -39,15 +42,18 @@ void CompilerExplorerOptionsWidget::apply(QSettings &settings) {
 	                                                     QString()).toString();
 	const auto useLocalServer = settings.value(constants::useLocalServerKey).toBool();
 	const auto remoteServerUrl = settings.value(constants::remoteServerUrlKey, QString()).toString();
+	const auto localPort = settings.value(constants::localServerPortKey, 10240).toInt();
 
 	settings.setValue(constants::useLocalServerKey ,ui->useLocalServerButton->isChecked());
 	settings.setValue(constants::nodejsFileNameKey, ui->nodejsLocation->text());
 	settings.setValue(constants::compilerExplorerLocationKey, ui->compilerExplorerLocation->text());
+	settings.setValue(constants::localServerPortKey, ui->localPort->value());
 	settings.setValue(constants::remoteServerUrlKey, ui->remoteServerUrl->text());
 
 	if((nodejsLocation != ui->nodejsLocation->text()) ||
 	        (compilerExplorerLocation != ui->compilerExplorerLocation->text()) ||
 	        useLocalServer != ui->useLocalServerButton->isChecked() ||
+	        localPort != ui->localPort->value() ||
 	        remoteServerUrl != ui->remoteServerUrl->text()) {
 		emit settingsChanged();
 	}
