@@ -2,13 +2,16 @@
 #define EXPLOREROUTPUTPANE_H
 #include <coreplugin/ioutputpane.h>
 #include <QIcon>
+#include <memory>
 
 class QToolButton;
 class QLineEdit;
 class QTextEdit;
+class QSettings;
 namespace compilerExplorer {
 namespace network {
 class RequestSender;
+class RequestGenerator;
 }
 namespace gui{
 class ExplorerOutputTable;
@@ -36,6 +39,7 @@ public:
 	bool canPrevious() const override;
 	void goToNext() override;
 	void goToPrev() override;
+	void setSetting(const QSettings &settings);
 private:
 	void createTableView();
 	void createCompilerOptions();
@@ -54,7 +58,9 @@ private:
 	QToolButton *mDirectives;
 	QToolButton *mCommentOnly;
 	QToolButton *mIntel;
-	network::RequestSender *mRequestSender;
+	std::unique_ptr<network::RequestSender> mRequestSender;
+	std::unique_ptr<network::RequestGenerator> mRequestGenerator;
+	std::map<QToolButton *, QString> mOptions;
 };
 }
 }

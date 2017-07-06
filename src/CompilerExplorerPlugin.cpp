@@ -75,6 +75,7 @@ ExtensionSystem::IPlugin::ShutdownFlag CompilerExplorerPlugin::aboutToShutdown()
 
 void CompilerExplorerPlugin::restartNodeJsServer() {
 	const auto &settings = mOptionsPage->settings();
+//	mOutputPane->setSettings(settings);
 	const auto nodeJsLocation = settings.value(constants::nodejsFileNameKey).toString();
 	const auto compilerExplorerLocation = settings.value(constants::compilerExplorerLocationKey,
 	                                                     QString()).toString();

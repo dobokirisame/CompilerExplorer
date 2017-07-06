@@ -13,10 +13,12 @@ public:
 	std::unique_ptr<QNetworkReply> sendRequest(QNetworkAccessManager *manager) override;
 	QStringList filters() const;
 	void setFilters(const QStringList &filters);
+	void setFiltersKey(const QString &filtersKey);
 
 private:
 	QJsonObject jsonRequest() const;
 	QStringList mFilters;
+	QString mFiltersKey;
 };
 }
 }

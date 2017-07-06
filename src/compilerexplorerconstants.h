@@ -10,6 +10,7 @@ const QString nodejsFileNameKey = "nodejsFileName";
 const QString compilerExplorerLocationKey = "compilerExplorerLocation";
 const QString useLocalServerKey = "useLocalServer";
 const QString remoteServerUrlKey = "remoteServerUrl";
+const QString localServerPortKey = "localServerPortKey";
 
 } // namespace QCompilerExplorer
 } // namespace Constants
