@@ -8,6 +8,8 @@ const char ACTION_ID[] = "CompilerExplorer.Action";
 const char MENU_ID[] = "CompilerExplorer.Menu";
 const QString nodejsFileNameKey = "nodejsFileName";
 const QString compilerExplorerLocationKey = "compilerExplorerLocation";
+const QString useLocalServerKey = "useLocalServer";
+const QString remoteServerUrlKey = "remoteServerUrl";
 
 } // namespace QCompilerExplorer
 } // namespace Constants

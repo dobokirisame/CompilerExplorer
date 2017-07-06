@@ -78,10 +78,13 @@ void CompilerExplorerPlugin::restartNodeJsServer() {
 	const auto nodeJsLocation = settings.value(constants::nodejsFileNameKey).toString();
 	const auto compilerExplorerLocation = settings.value(constants::compilerExplorerLocationKey,
 	                                                     QString()).toString();
-//	mNodeJsServer->setProcessChannelMode(QProcess::ForwardedChannels);
+	const auto useLocalServer = settings.value(constants::useLocalServerKey).toBool();
+	mNodeJsServer->setProcessChannelMode(QProcess::ForwardedChannels);
 	if(mNodeJsServer->state() == QProcess::Running) {
 		mNodeJsServer->kill();
 	}
+	if(!useLocalServer)
+		return;
 	if(!QFile(nodeJsLocation).exists() || !QDir(compilerExplorerLocation).exists())
 		return;
 	QStringList args;

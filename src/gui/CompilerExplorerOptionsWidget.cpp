@@ -18,38 +18,50 @@ CompilerExplorerOptionsWidget::~CompilerExplorerOptionsWidget() {
 }
 
 void CompilerExplorerOptionsWidget::loadSettings(const QSettings &settings) {
-	auto nodejsLocation = settings.value(constants::nodejsFileNameKey, QString()).toString();
+	const auto nodejsLocation = settings.value(constants::nodejsFileNameKey, QString()).toString();
 	ui->nodejsLocation->setText(nodejsLocation);
 	const auto compilerExplorerLocation = settings.value(constants::compilerExplorerLocationKey,
 	                                                     QString()).toString();
 	ui->compilerExplorerLocation->setText(compilerExplorerLocation);
+	const auto useLocalServer = settings.value(constants::useLocalServerKey, true).toBool();
+	ui->useLocalServerButton->setChecked(useLocalServer);
+	ui->useRemoteServer->setChecked(!useLocalServer);
+	const auto remoteServerUrl = settings.value(constants::remoteServerUrlKey,
+	                                            QString("https://gcc.godbolt.org/")).toString();
+	ui->remoteServerUrl->setText(remoteServerUrl);
 }
 
 void CompilerExplorerOptionsWidget::apply(QSettings &settings) {
-	qDebug() <<"apply";
 	const auto nodejsLocation = settings.value(constants::nodejsFileNameKey, QString()).toString();
 	const auto compilerExplorerLocation = settings.value(constants::compilerExplorerLocationKey,
 	                                                     QString()).toString();
-	settings.setValue(constants::nodejsFileNameKey,ui->nodejsLocation->text());
-	qDebug() <<"nodejsFileNameKey";
-	settings.setValue(constants::compilerExplorerLocationKey,ui->compilerExplorerLocation->text());
-	qDebug() <<"compilerExplorerLocationKey";
+	const auto useLocalServer = settings.value(constants::useLocalServerKey).toBool();
+	const auto remoteServerUrl = settings.value(constants::remoteServerUrlKey, QString()).toString();
+
+	settings.setValue(constants::useLocalServerKey ,ui->useLocalServerButton->isChecked());
+	settings.setValue(constants::nodejsFileNameKey, ui->nodejsLocation->text());
+	settings.setValue(constants::compilerExplorerLocationKey, ui->compilerExplorerLocation->text());
+	settings.setValue(constants::remoteServerUrlKey, ui->remoteServerUrl->text());
+
 	if((nodejsLocation != ui->nodejsLocation->text()) ||
-	        (compilerExplorerLocation != ui->compilerExplorerLocation->text()) ) {
+	        (compilerExplorerLocation != ui->compilerExplorerLocation->text()) ||
+	        useLocalServer != ui->useLocalServerButton->isChecked() ||
+	        remoteServerUrl != ui->remoteServerUrl->text()) {
 		emit settingsChanged();
 	}
-	qDebug() <<"apply finished";
 }
 
 void CompilerExplorerOptionsWidget::on_toolButton_clicked() {
 	QString res = QFileDialog::getOpenFileName(this, tr("NodeJS"),
 	                                           QString(), tr("node ") + "(node**)");
-	ui->nodejsLocation->setText(res);
+	if(!res.isEmpty())
+		ui->nodejsLocation->setText(res);
 }
 
 void CompilerExplorerOptionsWidget::on_toolButton_2_clicked() {
 	QString res = QFileDialog::getExistingDirectory(this);
-	ui->compilerExplorerLocation->setText(res);
+	if(!res.isEmpty())
+		ui->compilerExplorerLocation->setText(res);
 }
 }
 }
