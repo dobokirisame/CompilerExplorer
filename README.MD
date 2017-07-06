@@ -1,5 +1,7 @@
 # CompilerExplorer
 
+[![Build Status](https://travis-ci.org/dobokirisame/CompilerExplorer.svg?branch=master)](https://travis-ci.org/dobokirisame/CompilerExplorer)
+
 ----------
 QtCreator plugin based on  https://github.com/mattgodbolt/compiler-explorer (https://gcc.godbolt.org/)
 
