@@ -29,6 +29,8 @@ void CompilerExplorerOptionsWidget::loadSettings(const QSettings &settings) {
 	const auto remoteServerUrl = settings.value(constants::remoteServerUrlKey,
 	                                            QString("https://gcc.godbolt.org/")).toString();
 	ui->remoteServerUrl->setText(remoteServerUrl);
+	ui->localServerGroupBox->setEnabled(useLocalServer);
+	ui->remoteServerUrl->setEnabled(!useLocalServer);
 }
 
 void CompilerExplorerOptionsWidget::apply(QSettings &settings) {
