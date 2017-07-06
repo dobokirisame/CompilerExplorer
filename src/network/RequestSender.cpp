@@ -35,7 +35,8 @@ QByteArray RequestSender::sendRequest(Request *request) const {
 		result = reply->readAll();
 	}
 	else if(reply->error() != QNetworkReply::NoError) {
-		qDebug() << reply->errorString();
+		result.append("ERROR");
+		result.append(reply->errorString().toUtf8());
 	}
 	return result;
 }

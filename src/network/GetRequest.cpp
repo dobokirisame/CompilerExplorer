@@ -9,7 +9,6 @@ GetRequest::GetRequest()
 
 }
 
-
 std::unique_ptr<QNetworkReply> GetRequest::sendRequest(QNetworkAccessManager *manager) {
 	if(address().isEmpty() || !manager)
 		return nullptr;
