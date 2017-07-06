@@ -3,7 +3,8 @@
 
 namespace compilerExplorer {
 namespace network{
-Request::Request() {
+Request::Request()
+    : mPort(80) {
 }
 
 Request::~Request() {

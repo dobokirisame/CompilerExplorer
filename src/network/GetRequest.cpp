@@ -14,7 +14,7 @@ std::unique_ptr<QNetworkReply> GetRequest::sendRequest(QNetworkAccessManager *ma
 		return nullptr;
 	QNetworkRequest request;
 	QUrl url(address());
-//	url.setPort(port());
+	url.setPort(port());
 	url.setQuery(parametersString());
 	request.setUrl(url);
 	return std::unique_ptr<QNetworkReply>(manager->get(request));
@@ -35,8 +35,7 @@ QString GetRequest::parametersString() const {
 	return result;
 }
 
-std::map<QString, QString> GetRequest::parameters() const
-{
+std::map<QString, QString> GetRequest::parameters() const {
 	return mParams;
 }
 }
