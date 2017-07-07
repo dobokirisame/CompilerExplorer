@@ -18,6 +18,13 @@ before_install:
   - sudo add-apt-repository --yes ppa:beineri/opt-qt58-trusty
   - sudo apt-get update -qq
 
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-6
+      
 install:
   - sudo apt-get -y install qt58[QTPACKAGE]
   - cd  /opt
@@ -25,12 +32,6 @@ install:
   - tar -xf ./qt-creator-opensource-src-4.2.2.tar.gz
   - export CXX="g++-6"
   
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-6
       
 notifications:
   email:
