@@ -34,8 +34,6 @@ install:
   - cd  /opt
   - wget http://download.qt.io/official_releases/qtcreator/4.2/4.2.2/qt-creator-opensource-src-4.2.2.tar.gz
   - tar -xf ./qt-creator-opensource-src-4.2.2.tar.gz
-  - mv -f /opt/qt58/lib/x86_64-linux-gnu/qtcreator /opt/qt58/lib/qtcreator
-  
       
 notifications:
   email:
@@ -47,6 +45,7 @@ script:
   - touch qt_deps.pri
   - echo "QTC_SOURCE = /opt/qt-creator-opensource-src-4.2.2" > qt_deps.pri
   - echo "QTC_BUILD = /opt/qt58" >> qt_deps.pri
+  - echo "LIBS+=-L/opt/qt58/lib/x86_64-linux-gnu/qtcreator/ -L/opt/qt58/lib/x86_64-linux-gnu/qtcreator/plugins
   - ls
   - cat ./qt_deps.pri
   - /opt/qt58/bin/qmake src.pro
