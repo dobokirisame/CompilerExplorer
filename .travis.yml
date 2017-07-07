@@ -19,6 +19,7 @@ script:
   - echo "QTC_BUILD = /opt/qt58" >> qt_deps.pri
   - ls
   - cat ./qt_deps.pri
-  - /opt/qt58/bin/qmake -project
   - /opt/qt58/bin/qmake src.pro
+  - ls
+  - cat ./.qmake.stash
   - make
