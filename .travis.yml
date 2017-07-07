@@ -1,22 +1,6 @@
 sudo: required
 dist: trusty
 language: generic
-compiler:
-  clang:
-    - 3.9
-    - 4.0
-    - trunk
-  gcc:
-    - 6.0
-    - trunk
-std:
-  - c++14
-  - c++17
-  - c++-latest
-  
-before_install:
-  - sudo add-apt-repository --yes ppa:beineri/opt-qt58-trusty
-  - sudo apt-get update -qq
 
 matrix:
   include:
@@ -28,13 +12,23 @@ matrix:
             - g++-6
           sources: &sources
             - ubuntu-toolchain-r-test
+        env:
+          - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
+
+before_install:
+    
+before_install:
+  - sudo add-apt-repository --yes ppa:beineri/opt-qt58-trusty
+  - sudo apt-get update -qq
+  - eval "${MATRIX_EVAL}"
+
       
 install:
   - sudo apt-get -y install qt58[QTPACKAGE]
+  - sudo apt-get -y install 
   - cd  /opt
   - wget http://download.qt.io/official_releases/qtcreator/4.2/4.2.2/qt-creator-opensource-src-4.2.2.tar.gz
   - tar -xf ./qt-creator-opensource-src-4.2.2.tar.gz
-  - export CXX="g++-6"
   
       
 notifications:
@@ -52,5 +46,5 @@ script:
   - /opt/qt58/bin/qmake src.pro
   - ls
   - cat ./.qmake.stash
-  - g++ -v
+  - which gcc-6
   - make
