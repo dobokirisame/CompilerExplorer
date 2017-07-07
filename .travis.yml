@@ -13,5 +13,6 @@ script:
   - cd src
   - /opt/qt58/bin/qmake -project
   - /opt/qt58/bin/qmake src.pro
-  - cd /opt/qt58/
+  - cd /opt/qt58/include
+  - find . -name qtcreatorplugin.pri
   - ls
