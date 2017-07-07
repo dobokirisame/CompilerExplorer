@@ -3,6 +3,9 @@ dist: trusty
 language: cpp
 compiler: g++
 
+std:
+  - c++14
+  
 before_install:
   - sudo add-apt-repository --yes ppa:beineri/opt-qt58-trusty
   - sudo apt-get update -qq
