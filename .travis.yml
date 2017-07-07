@@ -2,6 +2,9 @@ sudo: required
 dist: trusty
 language: generic
 
+script:
+  - sudo unlink /usr/bin/gcc && sudo ln -s /usr/bin/gcc-5 /usr/bin/gcc
+  - gcc --version
 matrix:
   include:
     - os: linux
@@ -9,6 +12,7 @@ matrix:
       addons:
         apt:
           packages:
+            - gcc-6
             - g++-6
           sources: &sources
             - ubuntu-toolchain-r-test
@@ -24,7 +28,9 @@ before_install:
 
       
 install:
-  - sudo apt-get -y install qt58[QTPACKAGE] 
+  - sudo apt-get -y install qt58base qt58creator
+  - sudo apt-get install -qq g++-6
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
   - cd  /opt
   - wget http://download.qt.io/official_releases/qtcreator/4.2/4.2.2/qt-creator-opensource-src-4.2.2.tar.gz
   - tar -xf ./qt-creator-opensource-src-4.2.2.tar.gz
@@ -42,8 +48,6 @@ script:
   - echo "QTC_BUILD = /opt/qt58" >> qt_deps.pri
   - ls
   - cat ./qt_deps.pri
-  - export CC=gcc-6
-  - export CXX=g++-6
   - /opt/qt58/bin/qmake src.pro
   - ls
   - cat ./.qmake.stash
