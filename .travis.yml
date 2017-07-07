@@ -1,10 +1,18 @@
 sudo: required
 dist: trusty
 language: cpp
-compiler: g++
-
+compiler:
+  clang:
+    - 3.9
+    - 4.0
+    - trunk
+  gcc:
+    - 6.0
+    - trunk
 std:
   - c++14
+  - c++17
+  - c++-latest
   
 before_install:
   - sudo add-apt-repository --yes ppa:beineri/opt-qt58-trusty
