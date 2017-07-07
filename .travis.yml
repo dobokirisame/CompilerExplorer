@@ -1,5 +1,7 @@
 sudo: required
 dist: trusty
+language: cpp
+compiler: g++
 
 before_install:
   - sudo add-apt-repository --yes ppa:beineri/opt-qt58-trusty
@@ -10,7 +12,19 @@ install:
   - cd  /opt
   - wget http://download.qt.io/official_releases/qtcreator/4.2/4.2.2/qt-creator-opensource-src-4.2.2.tar.gz
   - tar -xf ./qt-creator-opensource-src-4.2.2.tar.gz
+  - export CXX="g++-6"
   
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-6
+      
+notifications:
+  email:
+    on_success: never
+    on_failure: always
 script:
   - source /opt/qt58/bin/qt58-env.sh
   - cd $TRAVIS_BUILD_DIR/src
