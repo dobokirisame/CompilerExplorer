@@ -24,8 +24,7 @@ before_install:
 
       
 install:
-  - sudo apt-get -y install qt58[QTPACKAGE]
-  - sudo apt-get -y install 
+  - sudo apt-get -y install qt58[QTPACKAGE] 
   - cd  /opt
   - wget http://download.qt.io/official_releases/qtcreator/4.2/4.2.2/qt-creator-opensource-src-4.2.2.tar.gz
   - tar -xf ./qt-creator-opensource-src-4.2.2.tar.gz
@@ -43,8 +42,9 @@ script:
   - echo "QTC_BUILD = /opt/qt58" >> qt_deps.pri
   - ls
   - cat ./qt_deps.pri
+  - export CC=gcc-6
+  - export CXX=g++-6
   - /opt/qt58/bin/qmake src.pro
   - ls
   - cat ./.qmake.stash
-  - which gcc-6
   - make
