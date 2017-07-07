@@ -13,7 +13,7 @@ install:
   
 script:
   - source /opt/qt58/bin/qt58-env.sh
-  - cd src
+  - cd $TRAVIS_BUILD_DIR/src
   - export IDE_SOURCE_TREE=/opt/qt-creator-opensource-src-4.2.2
   - export IDE_BUILD_TREE=/opt/qt58
   - /opt/qt58/bin/qmake -project
