@@ -14,4 +14,4 @@ UI_DIR = $$DESTDIR/.ui/$$PROJECTFILENAME
 RCC_DIR = $$DESTDIR/.res/$$PROJECTFILENAME
 
 unix: CONFIG += c++14
-mingw: QMAKE_CXXFLAGS += -std=gnu++1y
+mingw: QMAKE_CXXFLAGS += -std=gnu++14

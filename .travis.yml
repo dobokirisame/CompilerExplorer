@@ -1,6 +1,6 @@
 sudo: required
 dist: trusty
-language: cpp
+language: generic
 compiler:
   clang:
     - 3.9
@@ -18,12 +18,16 @@ before_install:
   - sudo add-apt-repository --yes ppa:beineri/opt-qt58-trusty
   - sudo apt-get update -qq
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-6
+matrix:
+  include:
+    - os: linux
+      env: COMPILER_NAME=gcc CXX=g++-6 CC=gcc-6
+      addons:
+        apt:
+          packages:
+            - g++-6
+          sources: &sources
+            - ubuntu-toolchain-r-test
       
 install:
   - sudo apt-get -y install qt58[QTPACKAGE]
@@ -48,4 +52,5 @@ script:
   - /opt/qt58/bin/qmake src.pro
   - ls
   - cat ./.qmake.stash
+  - g++ -v
   - make
