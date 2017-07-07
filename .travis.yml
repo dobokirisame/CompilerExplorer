@@ -28,7 +28,7 @@ before_install:
 
       
 install:
-  - sudo apt-get -y install qt58base qt58creator
+  - sudo apt-get -y install qt58[QTPACKAGE]
   - sudo apt-get install -qq g++-6
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
   - cd  /opt
