@@ -7,13 +7,15 @@ before_install:
 
 install:
   - sudo apt-get -y install qt58[QTPACKAGE]
-  - sudo apt-get install qt58creator-dev
   
 script:
   - source /opt/qt58/bin/qt58-env.sh
+  - cd  /opt
+  - wget http://download.qt.io/official_releases/qtcreator/4.2/4.2.2/qt-creator-opensource-src-4.2.2.tar.gz
+  - tar -xf ./qt-creator-opensource-src-4.2.2.tar.gz
   - cd src
+  - export IDE_SOURCE_TREE=/opt/qt-creator-opensource-src-4.2.2
+  - export IDE_BUILD_TREE=/opt/qt58
   - /opt/qt58/bin/qmake -project
   - /opt/qt58/bin/qmake src.pro
-  - cd /opt/qt58/include
-  - find . -name qtcreatorplugin.pri
-  - ls
+  - make
