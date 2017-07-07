@@ -57,3 +57,4 @@ FORMS += \
     gui/CompilerExplorerOptionsWidget.ui
 
 LISB +=-L$$IDE_BUILD_TREE/bin
+LISB +=-L$$IDE_BUILD_TREE/lib
