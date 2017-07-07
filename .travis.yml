@@ -16,7 +16,7 @@ script:
   - cd $TRAVIS_BUILD_DIR/src
   - touch qt_deps.pri
   - echo "QTC_SOURCE = /opt/qt-creator-opensource-src-4.2.2" > qt_deps.pri
-  - echo "QTC_BUILD = /opt/qt58" >> qt_dep.pri
+  - echo "QTC_BUILD = /opt/qt58" >> qt_deps.pri
   - ls
   - cat ./qt_deps.pri
   - /opt/qt58/bin/qmake -project
