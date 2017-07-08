@@ -8,11 +8,11 @@
 #include <QDebug>
 #include <QTextCodec>
 #include <QTextEdit>
+#include <QComboBox>
 
+#include "network/Request.h"
 #include "network/RequestSender.h"
 #include "network/RequestGenerator.h"
-//#include "network/GetRequest.h"
-//#include "network/PostJsonRequest.h"
 
 #include <coreplugin/editormanager/editormanager.h>
 #include <coreplugin/editormanager/ieditor.h>
@@ -30,14 +30,17 @@ ExplorerOutputPane::ExplorerOutputPane(QObject *parent)
       mDirectives(nullptr),
       mCommentOnly(nullptr),
       mIntel(nullptr),
+      mCompilersList(nullptr),
       mRequestSender(std::make_unique<network::RequestSender>(this)),
       mRequestGenerator(std::make_unique<network::RequestGenerator>()){
 	createTableView();
 	createCompilerOptions();
 	createButtons();
+	createCompilersList();
 }
 
 ExplorerOutputPane::~ExplorerOutputPane() {
+	delete mCompilersList;
 	delete mIntel;
 	delete mCommentOnly;
 	delete mDirectives;
@@ -65,7 +68,9 @@ QWidget *ExplorerOutputPane::outputWidget(QWidget *parent) {
 
 QList<QWidget *> ExplorerOutputPane::toolBarWidgets() const {
 	QList<QWidget *> result;
-	result << mRunButton << mCompilerOptions << mBinary << mLabel << mDirectives << mCommentOnly << mIntel;
+	result << mRunButton << mCompilerOptions << mBinary
+	       << mLabel << mDirectives << mCommentOnly
+	       << mIntel << mCompilersList;
 	return result;
 }
 
@@ -117,9 +122,15 @@ void ExplorerOutputPane::goToNext() {
 void ExplorerOutputPane::goToPrev() {
 }
 
-void ExplorerOutputPane::setSetting(const QSettings &settings) {
+void ExplorerOutputPane::updateSettings(const QSettings &settings) {
 	if(mRequestGenerator)
-		mRequestGenerator->setSetting(settings);
+		mRequestGenerator->updateSettings(settings);
+	getCompilersList(mRequestGenerator->address(), mRequestGenerator->port());
+}
+
+void ExplorerOutputPane::setCompilers(const QStringList &compilers) {
+	if(mCompilersList)
+		mCompilersList->addItems(compilers);
 }
 
 void ExplorerOutputPane::createTableView() {
@@ -166,10 +177,22 @@ QToolButton *ExplorerOutputPane::createButton(const QString &text, const QString
 	return btn;
 }
 
+void ExplorerOutputPane::createCompilersList() {
+	mCompilersList = new QComboBox();
+}
+
 void ExplorerOutputPane::onRunClicked() {
 	//TODO: move all request genereation to separate class
+
 	if(!mRequestSender)
 		return;
+//	network::RequestGenerator.setCompilerLocation();
+	mRequestGenerator->setCompilerOptions(mCompilerOptions->text());
+	mRequestGenerator->setFilters(filters());
+	auto source = Core::EditorManager::currentDocument()->contents();
+	auto uncodeSource = QTextCodec::codecForMib(106)->toUnicode(source); // 106 - utf8
+	mRequestGenerator->setSourceCode(uncodeSource);
+	mRequestGenerator->setCompilerLocation(mCompilersList->currentText());
 //	network::PostJsonRequest request;
 //	request.setAddress("http://localhost:10240");
 //	request.setAddress("http://localhost:10240/api/compiler/%2Fusr%2Fbin%2Fclang%2B%2B/compile");
@@ -183,7 +206,23 @@ void ExplorerOutputPane::onRunClicked() {
 //	auto reply = mRequestSender->sendRequest(&request);
 //	qDebug() << "request reply" << reply;
 //	mExplorer->clear();
-//	mExplorer->setText(QTextCodec::codecForMib(106)->toUnicode(reply));
+	        //	mExplorer->setText(QTextCodec::codecForMib(106)->toUnicode(reply));
+}
+
+QStringList ExplorerOutputPane::filters() const {
+	QStringList result;
+	for(auto filter : mOptions) {
+		if(filter.first->isChecked())
+			result.append(filter.second);
+	}
+	return result;
+
+}
+
+void ExplorerOutputPane::getCompilersList(const QString &address, const int port) {
+	const auto request = network::RequestGenerator::comilersListRequest(address, port);
+	auto reply = mRequestSender->sendRequest(request.get());
+	mExplorer->setText(QTextCodec::codecForMib(106)->toUnicode(reply));
 }
 
 }

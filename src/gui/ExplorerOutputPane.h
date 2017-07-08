@@ -8,6 +8,7 @@ class QToolButton;
 class QLineEdit;
 class QTextEdit;
 class QSettings;
+class QComboBox;
 namespace compilerExplorer {
 namespace network {
 class RequestSender;
@@ -39,13 +40,17 @@ public:
 	bool canPrevious() const override;
 	void goToNext() override;
 	void goToPrev() override;
-	void setSetting(const QSettings &settings);
+	void updateSettings(const QSettings &settings);
+	void setCompilers(const QStringList &compilers);
 private:
 	void createTableView();
 	void createCompilerOptions();
 	void createButtons();
 	QToolButton *createButton(const QString &text, const QString &tooltip,
 	                          bool checkable = true, const QIcon &icon = QIcon());
+	void createCompilersList();
+	QStringList filters() const;
+	void getCompilersList(const QString &address, const int port);
 private slots:
 	void onRunClicked();
 private:
@@ -58,6 +63,7 @@ private:
 	QToolButton *mDirectives;
 	QToolButton *mCommentOnly;
 	QToolButton *mIntel;
+	QComboBox *mCompilersList;
 	std::unique_ptr<network::RequestSender> mRequestSender;
 	std::unique_ptr<network::RequestGenerator> mRequestGenerator;
 	std::map<QToolButton *, QString> mOptions;

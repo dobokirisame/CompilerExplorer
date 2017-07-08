@@ -23,7 +23,8 @@ public:
 	QStringList filters;
 };
 
-RequestGenerator::RequestGenerator() {
+RequestGenerator::RequestGenerator()
+    : RequestGenerator(QString(), 0) {
 }
 
 RequestGenerator::RequestGenerator(const QString &address, const int port)
@@ -46,8 +47,16 @@ Request *RequestGenerator::createCompilerRequest() {
 	return std::move(result);
 }
 
+QString RequestGenerator::address() const {
+	return d->address;
+}
+
 void RequestGenerator::setAddress(const QString &address) {
 	d->address = address;
+}
+
+int RequestGenerator::port() const {
+	return d->port;
 }
 
 void RequestGenerator::setPort(const int port){
@@ -70,7 +79,7 @@ void RequestGenerator::setFilters(const QStringList &filters) {
 	d->filters = filters;
 }
 
-void RequestGenerator::setSetting(const QSettings &settings) {
+void RequestGenerator::updateSettings(const QSettings &settings) {
 	const auto useLocalServer = settings.value(constants::useLocalServerKey).toBool();
 	QString address;
 	int port;
@@ -85,8 +94,8 @@ void RequestGenerator::setSetting(const QSettings &settings) {
 	setPort(port);
 }
 
-Request *RequestGenerator::comilersListRequest(const QString &address, const int port) {
-	GetRequest *result = new GetRequest();
+std::unique_ptr<Request> RequestGenerator::comilersListRequest(const QString &address, const int port) {
+	auto result = std::make_unique<GetRequest>();
 	result->setAddress(QString("%1:%2/api/compilers").arg(address).arg(port));
 	return std::move(result);
 }

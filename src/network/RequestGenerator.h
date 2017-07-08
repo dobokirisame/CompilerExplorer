@@ -16,14 +16,16 @@ public:
 	RequestGenerator(const QString &address, const int port);
 	virtual ~RequestGenerator();
 	Request *createCompilerRequest();
+	QString address() const;
 	void setAddress(const QString &address);
+	int port() const;
 	void setPort(const int port);
 	void setCompilerLocation(const QString &location);
 	void setCompilerOptions(const QString &options);
 	void setSourceCode(const QString &code);
 	void setFilters(const QStringList &filters);
-	void setSetting(const QSettings &settings);
-	static Request *comilersListRequest(const QString &address, const int port);
+	void updateSettings(const QSettings &settings);
+	static std::unique_ptr<Request> comilersListRequest(const QString &address, const int port);
 private:
 	std::unique_ptr<RequestGeneratorPrivate> d;
 };
