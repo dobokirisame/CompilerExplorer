@@ -189,7 +189,9 @@ void ExplorerOutputPane::onRunClicked() {
 //	network::RequestGenerator.setCompilerLocation();
 	mRequestGenerator->setCompilerOptions(mCompilerOptions->text());
 	mRequestGenerator->setFilters(filters());
-	auto source = Core::EditorManager::currentDocument()->contents();
+	QByteArray source;
+	if(auto currentDocument = Core::EditorManager::currentDocument())
+		source = currentDocument->contents();
 	auto uncodeSource = QTextCodec::codecForMib(106)->toUnicode(source); // 106 - utf8
 	mRequestGenerator->setSourceCode(uncodeSource);
 	mRequestGenerator->setCompilerLocation(mCompilersList->currentText());
