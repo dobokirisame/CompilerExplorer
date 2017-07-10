@@ -16,6 +16,11 @@ std::unique_ptr<QNetworkReply> GetRequest::sendRequest(QNetworkAccessManager *ma
 	QUrl url(address());
 	url.setPort(port());
 	url.setQuery(parametersString());
+
+	QSslConfiguration conf = request.sslConfiguration();
+	conf.setPeerVerifyMode(QSslSocket::VerifyNone);
+	request.setSslConfiguration(conf);
+
 	request.setUrl(url);
 	return std::unique_ptr<QNetworkReply>(manager->get(request));
 }
@@ -38,5 +43,10 @@ QString GetRequest::parametersString() const {
 std::map<QString, QString> GetRequest::parameters() const {
 	return mParams;
 }
+
+QString GetRequest::requestName() {
+	return QObject::tr("GetRequest");
+}
+
 }
 }

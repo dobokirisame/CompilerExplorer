@@ -84,7 +84,7 @@ void RequestGenerator::updateSettings(const QSettings &settings) {
 	QString address;
 	int port;
 	if(useLocalServer) {
-		address = "localhost";
+		address = "http://localhost";
 		port = settings.value(constants::localServerPortKey).toInt();
 	} else {
 		address = settings.value(constants::remoteServerUrlKey).toString();

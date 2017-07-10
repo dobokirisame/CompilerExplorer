@@ -47,5 +47,8 @@ void PostJsonRequest::setFiltersKey(const QString &filtersKey) {
 	mFiltersKey = filtersKey;
 }
 
+QString PostJsonRequest::requestName() {
+	return QObject::tr("PostJsonRequest");
+}
 }
 }

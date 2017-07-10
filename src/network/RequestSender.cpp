@@ -4,6 +4,7 @@
 #include <QNetworkReply>
 #include <QTimer>
 #include <QEventLoop>
+#include <QDebug>
 
 const int timeout = 15000;
 
@@ -20,9 +21,9 @@ QByteArray RequestSender::sendRequest(Request *request) const {
 	QTimer timer;
 	timer.setInterval(timeout);
 	timer.setSingleShot(true);
+	qInfo() << "Sending " << request->requestName();
 	QEventLoop loop;
 	auto reply = request->sendRequest(mManager);
-	qDebug() << "reply == nullptr" << (reply == nullptr);
 	if(!reply)
 		return {};
 	connect(reply.get(), &QNetworkReply::finished, &loop, &QEventLoop::quit);
@@ -35,7 +36,7 @@ QByteArray RequestSender::sendRequest(Request *request) const {
 		result = reply->readAll();
 	}
 	else if(reply->error() != QNetworkReply::NoError) {
-		result.append("ERROR");
+		result.append("ERROR: ");
 		result.append(reply->errorString().toUtf8());
 	}
 	return result;

@@ -14,6 +14,7 @@ public:
 	QStringList filters() const;
 	void setFilters(const QStringList &filters);
 	void setFiltersKey(const QString &filtersKey);
+	QString requestName() override;
 
 private:
 	QJsonObject jsonRequest() const;

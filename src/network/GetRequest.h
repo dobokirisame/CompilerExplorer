@@ -13,6 +13,8 @@ public:
 	std::unique_ptr<QNetworkReply> sendRequest(QNetworkAccessManager *manager) override;
 	void addParameter(const QString &parameterName, const QString &parameterValue);
 	std::map<QString, QString> parameters() const;
+	QString requestName() override;
+
 private:
 	QString parametersString() const;
 private:
