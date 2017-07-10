@@ -14,13 +14,16 @@ std::unique_ptr<QNetworkReply> GetRequest::sendRequest(QNetworkAccessManager *ma
 		return nullptr;
 	QNetworkRequest request;
 	QUrl url(address());
-	url.setPort(port());
+	if(address().startsWith("https")) {
+		manager->connectToHostEncrypted(address());
+	}
+
+//	url.setPort(port());
 	url.setQuery(parametersString());
 
-	QSslConfiguration conf = request.sslConfiguration();
-	conf.setPeerVerifyMode(QSslSocket::VerifyNone);
-	request.setSslConfiguration(conf);
-
+	QSslConfiguration sslConfiguration(QSslConfiguration::defaultConfiguration());
+	sslConfiguration.setProtocol(QSsl::SecureProtocols);
+	request.setSslConfiguration(sslConfiguration);
 	request.setUrl(url);
 	return std::unique_ptr<QNetworkReply>(manager->get(request));
 }

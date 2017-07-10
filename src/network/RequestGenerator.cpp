@@ -38,7 +38,7 @@ RequestGenerator::~RequestGenerator() {
 
 Request *RequestGenerator::createCompilerRequest() {
 	PostJsonRequest *result = new PostJsonRequest();
-	result->setAddress(QString("%1:%2/%3").arg(d->address).arg(d->port).arg(d->compilerLocation));
+	result->setAddress(QString("%1/%2").arg(d->address).arg(d->compilerLocation));
 	result->addParameter(compilerLocationKey, d->compilerLocation);
 	result->addParameter(sourceCodeKey, d->sourceCode);
 	result->addParameter(compilerOptionsKey, d->compilerOptions);
@@ -94,9 +94,13 @@ void RequestGenerator::updateSettings(const QSettings &settings) {
 	setPort(port);
 }
 
-std::unique_ptr<Request> RequestGenerator::comilersListRequest(const QString &address, const int port) {
+std::unique_ptr<Request> RequestGenerator::comilersListRequest(const QString &address) {
 	auto result = std::make_unique<GetRequest>();
-	result->setAddress(QString("%1:%2/api/compilers").arg(address).arg(port));
+	auto serverAddress = address;
+	if (serverAddress.endsWith("/")) {
+		serverAddress = serverAddress.mid(0, serverAddress.length() - 1);
+	}
+	result->setAddress(QString("%1/api/compilers").arg(serverAddress));
 	return std::move(result);
 }
 }

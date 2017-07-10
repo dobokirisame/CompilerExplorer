@@ -37,7 +37,8 @@ SOURCES += \
     network/Request.cpp \
     network/GetRequest.cpp \
     network/PostJsonRequest.cpp \
-    network/RequestGenerator.cpp
+    network/RequestGenerator.cpp \
+    network/CompilersListReplyParser.cpp
 
 HEADERS += \
     compilerexplorerconstants.h \
@@ -51,7 +52,8 @@ HEADERS += \
     network/Request.h \
     network/GetRequest.h \
     network/PostJsonRequest.h \
-    network/RequestGenerator.h
+    network/RequestGenerator.h \
+    network/CompilersListReplyParser.h
 
 FORMS += \
     gui/CompilerExplorerOptionsWidget.ui

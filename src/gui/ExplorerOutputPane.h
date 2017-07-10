@@ -50,7 +50,7 @@ private:
 	                          bool checkable = true, const QIcon &icon = QIcon());
 	void createCompilersList();
 	QStringList filters() const;
-	void getCompilersList(const QString &address, const int port);
+	void getCompilersList(const QString &address);
 private slots:
 	void onRunClicked();
 private:

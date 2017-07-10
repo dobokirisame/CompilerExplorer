@@ -25,7 +25,7 @@ public:
 	void setSourceCode(const QString &code);
 	void setFilters(const QStringList &filters);
 	void updateSettings(const QSettings &settings);
-	static std::unique_ptr<Request> comilersListRequest(const QString &address, const int port);
+	static std::unique_ptr<Request> comilersListRequest(const QString &address);
 private:
 	std::unique_ptr<RequestGeneratorPrivate> d;
 };

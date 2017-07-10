@@ -125,7 +125,7 @@ void ExplorerOutputPane::goToPrev() {
 void ExplorerOutputPane::updateSettings(const QSettings &settings) {
 	if(mRequestGenerator)
 		mRequestGenerator->updateSettings(settings);
-	getCompilersList(mRequestGenerator->address(), mRequestGenerator->port());
+	getCompilersList(mRequestGenerator->address());
 }
 
 void ExplorerOutputPane::setCompilers(const QStringList &compilers) {
@@ -221,8 +221,8 @@ QStringList ExplorerOutputPane::filters() const {
 
 }
 
-void ExplorerOutputPane::getCompilersList(const QString &address, const int port) {
-	const auto request = network::RequestGenerator::comilersListRequest(address, port);
+void ExplorerOutputPane::getCompilersList(const QString &address) {
+	const auto request = network::RequestGenerator::comilersListRequest(address);
 	auto reply = mRequestSender->sendRequest(request.get());
 	mExplorer->setText(QTextCodec::codecForMib(106)->toUnicode(reply));
 }
