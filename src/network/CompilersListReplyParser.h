@@ -1,6 +1,7 @@
 #ifndef COMPILERSLISTREQUESTPARSER_H
 #define COMPILERSLISTREQUESTPARSER_H
 #include <QByteArray>
+#include <QString>
 #include <map>
 
 namespace compilerExplorer {
@@ -11,7 +12,7 @@ public:
 	explicit CompilersListReplyParser(const QByteArray &reply);
 	static std::map<QString, QString> parse(QByteArray reply);
 private:
-	void parse();
+	std::map<QString, QString> parseReply();
 private:
 	QByteArray mReply;
 };

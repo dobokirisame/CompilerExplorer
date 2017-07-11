@@ -3,18 +3,18 @@
 namespace compilerExplorer {
 namespace network{
 
-CompilersListReplyParser::CompilersListReplyParser(const QByteArray &reply) {
-	CompilersListReplyParser parser(reply);
-	parser.parse();
+CompilersListReplyParser::CompilersListReplyParser(const QByteArray &reply)
+    : mReply(reply){
+
 }
 
 std::map<QString, QString> CompilersListReplyParser::parse(QByteArray reply) {
-	Q_UNUSED(reply);
-	return {};
+	CompilersListReplyParser parser(reply);
+	return parser.parseReply();
 }
 
-void CompilersListReplyParser::parse() {
-
+std::map<QString, QString> CompilersListReplyParser::parseReply() {
+	return {};
 }
 
 

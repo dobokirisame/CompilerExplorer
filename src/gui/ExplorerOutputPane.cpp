@@ -13,6 +13,7 @@
 #include "network/Request.h"
 #include "network/RequestSender.h"
 #include "network/RequestGenerator.h"
+#include "network/CompilersListReplyParser.h"
 
 #include <coreplugin/editormanager/editormanager.h>
 #include <coreplugin/editormanager/ieditor.h>
@@ -224,6 +225,11 @@ QStringList ExplorerOutputPane::filters() const {
 void ExplorerOutputPane::getCompilersList(const QString &address) {
 	const auto request = network::RequestGenerator::comilersListRequest(address);
 	auto reply = mRequestSender->sendRequest(request.get());
+	auto parsedCompilersList = network::CompilersListReplyParser::parse(reply);
+	QStringList compilers;
+	for(const auto &parsedCompiler : parsedCompilersList) {
+		compilers.append(parsedCompiler.second);
+	}
 	mExplorer->setText(QTextCodec::codecForMib(106)->toUnicode(reply));
 }
 
