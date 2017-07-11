@@ -1,6 +1,7 @@
 #ifndef COMPILERSLISTREQUESTPARSER_H
 #define COMPILERSLISTREQUESTPARSER_H
 #include <QByteArray>
+#include <map>
 
 namespace compilerExplorer {
 namespace network{
