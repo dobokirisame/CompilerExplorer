@@ -126,12 +126,15 @@ void ExplorerOutputPane::goToPrev() {
 void ExplorerOutputPane::updateSettings(const QSettings &settings) {
 	if(mRequestGenerator)
 		mRequestGenerator->updateSettings(settings);
-	getCompilersList(mRequestGenerator->address());
+	 updateCompilersList(mRequestGenerator->address());
 }
 
-void ExplorerOutputPane::setCompilers(const QStringList &compilers) {
-	if(mCompilersList)
-		mCompilersList->addItems(compilers);
+void ExplorerOutputPane::setCompilers(const std::map<QString, QString> &compilers) {
+	if(compilers.empty())
+		return;
+	for(const auto &compiler : compilers) {
+		mCompilersList->addItem(compiler.second, compiler.first);
+	}
 }
 
 void ExplorerOutputPane::createTableView() {
@@ -222,15 +225,19 @@ QStringList ExplorerOutputPane::filters() const {
 
 }
 
-void ExplorerOutputPane::getCompilersList(const QString &address) {
+void ExplorerOutputPane::updateCompilersList(const QString &address) {
+	auto compilers = compilersList(address);
+	if(compilers.empty())
+		return;
+	setCompilers(compilers);
+}
+
+std::map<QString, QString> ExplorerOutputPane::compilersList(const QString &address) const {
 	const auto request = network::RequestGenerator::comilersListRequest(address);
 	auto reply = mRequestSender->sendRequest(request.get());
 	auto parsedCompilersList = network::CompilersListReplyParser::parse(reply);
-	QStringList compilers;
-	for(const auto &parsedCompiler : parsedCompilersList) {
-		compilers.append(parsedCompiler.second);
-	}
 	mExplorer->setText(QTextCodec::codecForMib(106)->toUnicode(reply));
+	return parsedCompilersList;
 }
 
 }

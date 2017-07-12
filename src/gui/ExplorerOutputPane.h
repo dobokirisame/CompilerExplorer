@@ -41,7 +41,6 @@ public:
 	void goToNext() override;
 	void goToPrev() override;
 	void updateSettings(const QSettings &settings);
-	void setCompilers(const QStringList &compilers);
 private:
 	void createTableView();
 	void createCompilerOptions();
@@ -50,7 +49,9 @@ private:
 	                          bool checkable = true, const QIcon &icon = QIcon());
 	void createCompilersList();
 	QStringList filters() const;
-	void getCompilersList(const QString &address);
+	void updateCompilersList(const QString &address);
+	std::map<QString, QString> compilersList(const QString &address) const;
+	void setCompilers(const std::map<QString, QString> &compilers);
 private slots:
 	void onRunClicked();
 private:
