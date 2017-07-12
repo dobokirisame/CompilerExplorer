@@ -30,10 +30,20 @@ std::map<QString, QString> CompilersListReplyParser::parseReply() {
 			qInfo() << "Strange compiler pair in reply: " << textPair;
 			return result;
 		}
-		result.insert({textPair.at(0),textPair.at(1)});
+		auto compilerId = removeSpacesAtEnd(textPair.at(0));
+		result.insert({compilerId,textPair.at(1)});
 	}
 	result.erase(result.begin());
 	return result;
+}
+
+QString CompilersListReplyParser::removeSpacesAtEnd(const QString &text) const{
+	auto newText = text;
+	if (newText.endsWith(" ")) {
+		newText = newText.mid(0, newText.length() - 1);
+		newText = removeSpacesAtEnd(newText);
+	}
+	return newText;
 }
 
 QByteArray CompilersListReplyParser::reply() const {

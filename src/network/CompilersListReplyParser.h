@@ -15,7 +15,7 @@ public:
 	void setReply(const QByteArray &reply);
 private:
 	std::map<QString, QString> parseReply();
-
+	QString removeSpacesAtEnd(const QString &text) const;
 private:
 	QByteArray mReply;
 };
