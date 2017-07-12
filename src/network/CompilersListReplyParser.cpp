@@ -26,8 +26,10 @@ std::map<QString, QString> CompilersListReplyParser::parseReply() {
 	}
 	for(const auto &item : items) {
 		auto textPair = item.split(" | ");
-		if(textPair.size() > 2)
+		if(textPair.size() != 2) {
 			qInfo() << "Strange compiler pair in reply: " << textPair;
+			return result;
+		}
 		result.insert({textPair.at(0),textPair.at(1)});
 	}
 	result.erase(result.begin());

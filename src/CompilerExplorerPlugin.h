@@ -24,9 +24,11 @@ public:
 	bool initialize(const QStringList &arguments, QString *errorString);
 	void extensionsInitialized();
 	ShutdownFlag aboutToShutdown();
-
+signals:
+	void serverChanged();
 private:
 	void restartNodeJsServer();
+	void updateGui();
 private:
 	gui::ExplorerOutputPane *mOutputPane;
 	gui::CompilerExplorerOptionsPage *mOptionsPage;

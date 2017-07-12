@@ -60,6 +60,8 @@ bool CompilerExplorerPlugin::initialize(const QStringList &arguments, QString *e
 	mOptionsPage = new gui::CompilerExplorerOptionsPage(this);
 	connect(mOptionsPage, &gui::CompilerExplorerOptionsPage::settingsChanged,
 	        this, &CompilerExplorerPlugin::restartNodeJsServer);
+	connect(this, &CompilerExplorerPlugin::serverChanged,
+	        this, &CompilerExplorerPlugin::updateGui);
 	addAutoReleasedObject(mOptionsPage);
 	mNodeJsServer = new QProcess(this);
 	restartNodeJsServer();
@@ -75,8 +77,6 @@ ExtensionSystem::IPlugin::ShutdownFlag CompilerExplorerPlugin::aboutToShutdown()
 
 void CompilerExplorerPlugin::restartNodeJsServer() {
 	const auto &settings = mOptionsPage->settings();
-	if(mOutputPane)
-		mOutputPane->updateSettings(settings);
 	const auto nodeJsLocation = settings.value(constants::nodejsFileNameKey).toString();
 	const auto compilerExplorerLocation = settings.value(constants::compilerExplorerLocationKey,
 	                                                     QString()).toString();
@@ -86,14 +86,23 @@ void CompilerExplorerPlugin::restartNodeJsServer() {
 	if(mNodeJsServer->state() == QProcess::Running) {
 		mNodeJsServer->kill();
 	}
-	if(!useLocalServer)
+	if(!useLocalServer) {
+		emit serverChanged();
 		return;
+	}
 	if(!QFile(nodeJsLocation).exists() || !QDir(compilerExplorerLocation).exists())
 		return;
 	QStringList args;
 	args << compilerExplorerLocation +"/app.js" << "--language C++" << "--port=" + QString::number(localPort);
 	mNodeJsServer->setWorkingDirectory(compilerExplorerLocation);
 	mNodeJsServer->start(nodeJsLocation + " " + args.join(" "));
+	emit serverChanged();
+}
+
+void CompilerExplorerPlugin::updateGui() {
+	const auto &settings = mOptionsPage->settings();
+	if(mOutputPane)
+		mOutputPane->updateSettings(settings);
 }
 
 }

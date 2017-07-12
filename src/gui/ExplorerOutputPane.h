@@ -8,7 +8,9 @@ class QToolButton;
 class QLineEdit;
 class QTextEdit;
 class QSettings;
+class QLabel;
 class QComboBox;
+
 namespace compilerExplorer {
 namespace network {
 class RequestSender;
@@ -64,6 +66,7 @@ private:
 	QToolButton *mDirectives;
 	QToolButton *mCommentOnly;
 	QToolButton *mIntel;
+	QLabel *mCurrentCompilerLabel;
 	QComboBox *mCompilersList;
 	std::unique_ptr<network::RequestSender> mRequestSender;
 	std::unique_ptr<network::RequestGenerator> mRequestGenerator;
