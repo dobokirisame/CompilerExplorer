@@ -60,3 +60,6 @@ FORMS += \
 
 LISB +=-L$$IDE_BUILD_TREE/bin
 LISB +=-L$$IDE_BUILD_TREE/lib
+
+RESOURCES += \
+    gui/images.qrc

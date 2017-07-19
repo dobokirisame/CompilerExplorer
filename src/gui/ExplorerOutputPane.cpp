@@ -153,7 +153,7 @@ void ExplorerOutputPane::createCompilerOptions() {
 
 void ExplorerOutputPane::createButtons() {
 	mRunButton = createButton(tr("Run"),
-	                          tr("Send request"), false);
+	                          tr("Send request"), false); //, QIcon("qrc:/images/run.png")
 	mBinary = createButton(tr("11010"),
 	                       tr("Compile to binary and disassemble the output"));
 	mOptions.insert({mBinary, "binary"});

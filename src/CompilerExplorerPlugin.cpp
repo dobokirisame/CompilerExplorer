@@ -43,7 +43,7 @@ bool CompilerExplorerPlugin::initialize(const QStringList &arguments, QString *e
 	mOutputPane = new gui::ExplorerOutputPane(this);
 	addAutoReleasedObject(mOutputPane);
 
-	auto action = new QAction(tr("Run Compiler Explorer"), this);
+	auto action = new QAction(QIcon(":/images/run.png"), tr("Run Compiler Explorer"), this);
 	Core::Command *cmd = Core::ActionManager::registerAction(action, constants::ACTION_ID,
 	                                                         Core::Context(Core::Constants::C_GLOBAL));
 	connect(action, &QAction::triggered, mOutputPane, &gui::ExplorerOutputPane::runCompilerExplorer);
