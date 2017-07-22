@@ -57,10 +57,7 @@ ExplorerOutputPane::~ExplorerOutputPane() {
 
 void ExplorerOutputPane::runCompilerExplorer() {
 	popup(0);
-	QMessageBox::information(Core::ICore::mainWindow(),
-	                         tr("Action Triggered"),
-	                         tr("This is an action from CompilerExplorer."));
-
+	onRunClicked();
 }
 
 QWidget *ExplorerOutputPane::outputWidget(QWidget *parent) {
@@ -152,8 +149,8 @@ void ExplorerOutputPane::createCompilerOptions() {
 }
 
 void ExplorerOutputPane::createButtons() {
-	mRunButton = createButton(tr("Run"),
-	                          tr("Send request"), false); //, QIcon("qrc:/images/run.png")
+	mRunButton = createButton(tr("Run"), tr("Send request"),
+	                          false, QIcon(":/images/run.png"));
 	mBinary = createButton(tr("11010"),
 	                       tr("Compile to binary and disassemble the output"));
 	mOptions.insert({mBinary, "binary"});

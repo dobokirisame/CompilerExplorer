@@ -11,7 +11,7 @@ CompilerExplorerOptionsPage::CompilerExplorerOptionsPage(QObject *parent)
 	setDisplayName(tr("Compiler Explorer"));
 	setCategory("Compiler Explorer");
 	setDisplayCategory(tr("Compiler Explorer"));
-	setCategoryIcon(Utils::Icon("qrc:/images/gcc.png"));
+	setCategoryIcon(Utils::Icon(":/images/gcc.png"));
 }
 
 QWidget *CompilerExplorerOptionsPage::widget() {
