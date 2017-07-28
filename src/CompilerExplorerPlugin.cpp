@@ -81,6 +81,7 @@ void CompilerExplorerPlugin::restartNodeJsServer() {
 	const auto compilerExplorerLocation = settings.value(constants::compilerExplorerLocationKey,
 	                                                     QString()).toString();
 	const auto useLocalServer = settings.value(constants::useLocalServerKey).toBool();
+	const auto startLocalServer = settings.value(constants::startLocalServerKey).toBool();
 	const auto localPort = settings.value(constants::localServerPortKey, 10240).toInt();
 	mNodeJsServer->setProcessChannelMode(QProcess::ForwardedChannels);
 	if(mNodeJsServer->state() == QProcess::Running) {
@@ -92,6 +93,10 @@ void CompilerExplorerPlugin::restartNodeJsServer() {
 	}
 	if(!QFile(nodeJsLocation).exists() || !QDir(compilerExplorerLocation).exists())
 		return;
+	if(!startLocalServer) {
+		emit serverChanged();
+		return;
+	}
 	QStringList args;
 	args << compilerExplorerLocation +"/app.js" << "--language C++" << "--port=" + QString::number(localPort);
 	mNodeJsServer->setWorkingDirectory(compilerExplorerLocation);

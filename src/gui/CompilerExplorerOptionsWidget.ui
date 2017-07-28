@@ -21,7 +21,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QGroupBox" name="groupBox">
+       <widget class="QGroupBox" name="localServerSettingsGroup">
         <property name="title">
          <string>Start local server</string>
         </property>
@@ -66,7 +66,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QToolButton" name="toolButton">
+            <widget class="QToolButton" name="nodejsLocationBrowseButton">
              <property name="text">
               <string>Browse...</string>
              </property>
@@ -111,7 +111,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QToolButton" name="toolButton_2">
+            <widget class="QToolButton" name="compilerExplorerLocationBrowseButton">
              <property name="text">
               <string>Browse...</string>
              </property>
@@ -120,7 +120,7 @@
           </layout>
          </item>
          <item row="3" column="0">
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="compilerExplorerLocationLabel">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -133,7 +133,7 @@
           </widget>
          </item>
          <item row="0" column="0">
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="nodejsLocationLabel">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -146,16 +146,12 @@
           </widget>
          </item>
         </layout>
-        <zorder>label</zorder>
-        <zorder></zorder>
-        <zorder></zorder>
-        <zorder>label_2</zorder>
        </widget>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QLabel" name="label_4">
+         <widget class="QLabel" name="localPortLabel">
           <property name="text">
            <string>Local server port:</string>
           </property>
@@ -191,7 +187,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QLabel" name="label_5">
+       <widget class="QLabel" name="descriptionLabel">
         <property name="font">
          <font>
           <italic>true</italic>
@@ -211,7 +207,7 @@
       <number>0</number>
      </property>
      <item>
-      <widget class="QLabel" name="label_3">
+      <widget class="QLabel" name="remoteServerUrlLabel">
        <property name="text">
         <string>Remote server url</string>
        </property>
@@ -288,7 +284,7 @@
   <connection>
    <sender>useRemoteServer</sender>
    <signal>clicked(bool)</signal>
-   <receiver>label_3</receiver>
+   <receiver>remoteServerUrlLabel</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -336,7 +332,7 @@
   <connection>
    <sender>useLocalServerButton</sender>
    <signal>clicked(bool)</signal>
-   <receiver>label_3</receiver>
+   <receiver>remoteServerUrlLabel</receiver>
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">

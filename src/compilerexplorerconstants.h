@@ -9,6 +9,7 @@ const char MENU_ID[] = "CompilerExplorer.Menu";
 const QString nodejsFileNameKey = "nodejsFileName";
 const QString compilerExplorerLocationKey = "compilerExplorerLocation";
 const QString useLocalServerKey = "useLocalServer";
+const QString startLocalServerKey = "startLocalServer";
 const QString remoteServerUrlKey = "remoteServerUrl";
 const QString localServerPortKey = "localServerPortKey";
 
