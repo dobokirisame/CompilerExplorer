@@ -8,9 +8,6 @@ QtCreator plugin based on  https://github.com/mattgodbolt/compiler-explorer (htt
 License: MIT
 
 
-Currently in development  
-Some of functions doesn't work(asm representations)  
-Use at your risk)  
 
 
 ----------
