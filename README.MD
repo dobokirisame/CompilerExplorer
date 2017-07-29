@@ -12,12 +12,14 @@ License: MIT
 
 ----------
 > **Build instruction**
->Download QtCreator sources  from http://download.qt.io It Should be exactly your QtCreator version(Help->About QtCreator)  
+>
+>Download QtCreator sources from http://download.qt.io. It Should be exactly as your QtCreator version(Help->About QtCreator)  
 >Copy qt_deps.pri.template file to qt_deps.pri and edit it  
 >
 
 ----------
 > **Instruction**
+>
 >Install NodeJS  
 >Clone and make compiler-explorer (https://github.com/mattgodbolt/compiler-explorer)  
 >Build plugin with Qt your QtCreator based on (Help->About QtCreator)  
