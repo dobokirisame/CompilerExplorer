@@ -53,10 +53,10 @@ bool CompilerExplorerPlugin::initialize(const QStringList &arguments, QString *e
 	menu->addAction(cmd);
 	Core::ActionManager::actionContainer(Core::Constants::M_TOOLS)->addMenu(menu);
 
-	auto panelFactory = new ProjectExplorer::ProjectPanelFactory;
-	panelFactory->setPriority(0);
-	panelFactory->setDisplayName(tr("Compile Explorer"));
-	ProjectExplorer::ProjectPanelFactory::registerFactory(panelFactory);
+	mPanelFactory = std::make_shared<ProjectExplorer::ProjectPanelFactory>();
+	mPanelFactory->setPriority(0);
+	mPanelFactory->setDisplayName(tr("Compile Explorer"));
+	ProjectExplorer::ProjectPanelFactory::registerFactory(mPanelFactory.get());
 	mOptionsPage = new gui::CompilerExplorerOptionsPage(this);
 	connect(mOptionsPage, &gui::CompilerExplorerOptionsPage::settingsChanged,
 	        this, &CompilerExplorerPlugin::restartNodeJsServer);

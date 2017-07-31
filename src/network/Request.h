@@ -4,12 +4,13 @@
 #include <memory>
 #include <QString>
 #include <QNetworkReply>
+#include "compilerexplorer_global.h"
 
 class QNetworkRequest;
 class QNetworkAccessManager;
 namespace compilerExplorer {
 namespace network{
-class Request
+class COMPILEREXPLORERSHARED_EXPORT Request
 {
 public:
 	Request();

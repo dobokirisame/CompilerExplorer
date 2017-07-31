@@ -3,10 +3,11 @@
 #include "Request.h"
 #include <QVariant>
 #include <map>
+#include "compilerexplorer_global.h"
 
 namespace compilerExplorer {
 namespace network{
-class GetRequest : public Request
+class COMPILEREXPLORERSHARED_EXPORT GetRequest : public Request
 {
 public:
 	GetRequest();

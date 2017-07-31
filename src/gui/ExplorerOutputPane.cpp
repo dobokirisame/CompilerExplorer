@@ -22,7 +22,6 @@ namespace compilerExplorer {
 namespace gui{
 ExplorerOutputPane::ExplorerOutputPane(QObject *parent)
     : Core::IOutputPane(parent),
-      //      mTableView(nullptr),
       mExplorer(nullptr),
       mCompilerOptions(nullptr),
       mRunButton(nullptr),
@@ -42,17 +41,6 @@ ExplorerOutputPane::ExplorerOutputPane(QObject *parent)
 }
 
 ExplorerOutputPane::~ExplorerOutputPane() {
-	delete mCompilersList;
-	delete mCurrentCompilerLabel;
-	delete mIntel;
-	delete mCommentOnly;
-	delete mDirectives;
-	delete mLabel;
-	delete mBinary;
-	delete mRunButton;
-	delete mCompilerOptions;
-	//	delete mTableView;
-	delete mExplorer;
 }
 
 void ExplorerOutputPane::runCompilerExplorer() {
@@ -62,15 +50,14 @@ void ExplorerOutputPane::runCompilerExplorer() {
 
 QWidget *ExplorerOutputPane::outputWidget(QWidget *parent) {
 	Q_UNUSED(parent);
-	//	return mTableView;
-	return mExplorer;
+	return mExplorer.get();
 }
 
 QList<QWidget *> ExplorerOutputPane::toolBarWidgets() const {
 	QList<QWidget *> result;
-	result << mRunButton << mCompilerOptions << mBinary
-	       << mLabel << mDirectives << mCommentOnly
-	       << mIntel << mCurrentCompilerLabel << mCompilersList;
+	result << mRunButton.get() << mCompilerOptions.get() << mBinary.get()
+	       << mLabel.get() << mDirectives.get() << mCommentOnly.get()
+	       << mIntel.get() << mCurrentCompilerLabel.get() << mCompilersList.get();
 	return result;
 }
 
@@ -91,13 +78,11 @@ void ExplorerOutputPane::visibilityChanged(bool visible) {
 }
 
 void ExplorerOutputPane::setFocus() {
-	//	mTableView->setFocus();
 	mExplorer->setFocus();
 }
 
 bool ExplorerOutputPane::hasFocus() const{
-	//	return mTableView->window()->focusWidget() == mTableView;
-	return mExplorer->window()->focusWidget() == mExplorer;
+	return mExplorer->window()->focusWidget() == mExplorer.get();
 }
 
 bool ExplorerOutputPane::canFocus() const {
@@ -138,13 +123,12 @@ void ExplorerOutputPane::setCompilers(const std::map<QString, QString> &compiler
 }
 
 void ExplorerOutputPane::createTableView() {
-	mExplorer = new QTextEdit();
+	mExplorer = std::make_shared<QTextEdit>();
 	mExplorer->setReadOnly(true);
-	//	mTableView = new ExplorerOutputTable();
 }
 
 void ExplorerOutputPane::createCompilerOptions() {
-	mCompilerOptions = new QLineEdit("-std=c++1y -O3");
+	mCompilerOptions = std::make_shared<QLineEdit>("-std=c++1y -O3");
 	mCompilerOptions->setPlaceholderText(tr("Compiler options..."));
 }
 
@@ -166,11 +150,11 @@ void ExplorerOutputPane::createButtons() {
 	mIntel = createButton(tr("Intel"),
 	                      tr("Output disassembly in Intel syntax"));
 	mOptions.insert({mIntel, "intel"});
-	connect(mRunButton, &QToolButton::clicked, this, &ExplorerOutputPane::onRunClicked);
+	connect(mRunButton.get(), &QToolButton::clicked, this, &ExplorerOutputPane::onRunClicked);
 }
 
-QToolButton *ExplorerOutputPane::createButton(const QString &text, const QString &tooltip, bool checkable, const QIcon &icon) {
-	auto btn = new QToolButton;
+std::unique_ptr<QToolButton> ExplorerOutputPane::createButton(const QString &text, const QString &tooltip, bool checkable, const QIcon &icon) {
+	auto btn = std::make_unique<QToolButton>();
 	btn->setText(text);
 	btn->setToolTip(tooltip);
 	btn->setCheckable(checkable);
@@ -178,20 +162,17 @@ QToolButton *ExplorerOutputPane::createButton(const QString &text, const QString
 		btn->setIcon(icon);
 		btn->setToolButtonStyle(Qt::ToolButtonIconOnly);
 	}
-	return btn;
+	return std::move(btn);
 }
 
 void ExplorerOutputPane::createCompilersList() {
-	mCurrentCompilerLabel = new QLabel(tr(" Current Compiler: "));
-	mCompilersList = new QComboBox();
+	mCurrentCompilerLabel = std::make_shared<QLabel>(tr(" Current Compiler: "));
+	mCompilersList = std::make_shared<QComboBox>();
 }
 
 void ExplorerOutputPane::onRunClicked() {
-	//TODO: move all request genereation to separate class
-
 	if(!mRequestSender)
 		return;
-	//	network::RequestGenerator.setCompilerLocation();
 	mRequestGenerator->setCompilerOptions(mCompilerOptions->text());
 	mRequestGenerator->setFilters(filters());
 	QByteArray source;
@@ -201,24 +182,9 @@ void ExplorerOutputPane::onRunClicked() {
 	mRequestGenerator->setSourceCode(unicodeSource);
 	mRequestGenerator->setCompilerLocation(mCompilersList->currentData().toString());
 	auto request = mRequestGenerator->createCompilerRequest();
-	auto reply = mRequestSender->sendRequest(request);
+	auto reply = mRequestSender->sendRequest(std::move(request));
 	mExplorer->clear();
 	mExplorer->setText(QTextCodec::codecForMib(106)->toUnicode(reply));
-
-//	network::PostJsonRequest request;
-//	request.setAddress("http://localhost:10240");
-//	request.setAddress("http://localhost:10240/api/compiler/%2Fusr%2Fbin%2Fclang%2B%2B/compile");
-//	request.setAddress("http://localhost:10240/api/compiler/%2Fmingw64%2Fbin%2Fgcc/compile");
-//	request.setPort(10240);
-//	request.addParameter("compiler",  "/mingw64/bin/gcc");
-//	                     "usr/bin/clang++");
-//	request.addParameter("options", mCompilerOptions->text());
-//	Core::EditorManager::currentDocument()->filePath().toString();
-//	request.addParameter("source",  QTextCodec::codecForMib(106)->toUnicode(Core::EditorManager::currentDocument()->contents()));
-//	auto reply = mRequestSender->sendRequest(&request);
-//	qDebug() << "request reply" << reply;
-//	mExplorer->clear();
-//	mExplorer->setText(QTextCodec::codecForMib(106)->toUnicode(reply));
 }
 
 QStringList ExplorerOutputPane::filters() const {
@@ -243,8 +209,8 @@ void ExplorerOutputPane::updateCompilersList(const QString &address) {
 }
 
 std::map<QString, QString> ExplorerOutputPane::compilersList(const QString &address) const {
-	const auto request = network::RequestGenerator::comilersListRequest(address);
-	auto reply = mRequestSender->sendRequest(request.get());
+	auto request = network::RequestGenerator::comilersListRequest(address);
+	auto reply = mRequestSender->sendRequest(std::move(request));
 	auto parsedCompilersList = network::CompilersListReplyParser::parse(reply);
 	return parsedCompilersList;
 }

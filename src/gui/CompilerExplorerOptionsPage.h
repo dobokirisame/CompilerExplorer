@@ -2,11 +2,12 @@
 #define COMPILEREXPLOREROPTIONSPAGE_H
 #include <coreplugin/dialogs/ioptionspage.h>
 #include <QSettings>
+#include "compilerexplorer_global.h"
 
 namespace compilerExplorer {
 namespace gui{
 class CompilerExplorerOptionsWidget;
-class CompilerExplorerOptionsPage : public Core::IOptionsPage
+class COMPILEREXPLORERSHARED_EXPORT CompilerExplorerOptionsPage : public Core::IOptionsPage
 {
 	Q_OBJECT
 public:

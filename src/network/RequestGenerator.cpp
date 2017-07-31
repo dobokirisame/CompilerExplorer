@@ -36,8 +36,8 @@ RequestGenerator::RequestGenerator(const QString &address, const int port)
 RequestGenerator::~RequestGenerator() {
 }
 
-Request *RequestGenerator::createCompilerRequest() {
-	PostJsonRequest *result = new PostJsonRequest();
+std::unique_ptr<Request> RequestGenerator::createCompilerRequest() {
+	auto result = std::make_unique<PostJsonRequest>();
 	result->setAddress(QString("%1/api/compiler/%2/compile").arg(d->address).arg(d->compilerLocation));
 	result->addParameter(compilerLocationKey, d->compilerLocation);
 	result->addParameter(sourceCodeKey, d->sourceCode);

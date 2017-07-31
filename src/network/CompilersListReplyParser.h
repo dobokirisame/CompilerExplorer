@@ -3,10 +3,11 @@
 #include <QByteArray>
 #include <QString>
 #include <map>
+#include "compilerexplorer_global.h"
 
 namespace compilerExplorer {
 namespace network{
-class CompilersListReplyParser
+class COMPILEREXPLORERSHARED_EXPORT CompilersListReplyParser
 {
 public:
 	explicit CompilersListReplyParser(const QByteArray &reply);

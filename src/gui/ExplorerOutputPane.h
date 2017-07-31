@@ -3,6 +3,7 @@
 #include <coreplugin/ioutputpane.h>
 #include <QIcon>
 #include <memory>
+#include "compilerexplorer_global.h"
 
 class QToolButton;
 class QLineEdit;
@@ -19,7 +20,7 @@ class RequestGenerator;
 namespace gui{
 class ExplorerOutputTable;
 
-class ExplorerOutputPane : public Core::IOutputPane
+class COMPILEREXPLORERSHARED_EXPORT ExplorerOutputPane : public Core::IOutputPane
 {
 	Q_OBJECT
 public:
@@ -47,7 +48,7 @@ private:
 	void createTableView();
 	void createCompilerOptions();
 	void createButtons();
-	QToolButton *createButton(const QString &text, const QString &tooltip,
+	std::unique_ptr<QToolButton> createButton(const QString &text, const QString &tooltip,
 	                          bool checkable = true, const QIcon &icon = QIcon());
 	void createCompilersList();
 	QStringList filters() const;
@@ -57,20 +58,19 @@ private:
 private slots:
 	void onRunClicked();
 private:
-//	ExplorerOutputTable *mTableView;
-	QTextEdit *mExplorer;
-	QLineEdit *mCompilerOptions;
-	QToolButton *mRunButton;
-	QToolButton *mBinary;
-	QToolButton *mLabel;
-	QToolButton *mDirectives;
-	QToolButton *mCommentOnly;
-	QToolButton *mIntel;
-	QLabel *mCurrentCompilerLabel;
-	QComboBox *mCompilersList;
+	std::shared_ptr<QTextEdit> mExplorer;
+	std::shared_ptr<QLineEdit> mCompilerOptions;
+	std::shared_ptr<QToolButton> mRunButton;
+	std::shared_ptr<QToolButton> mBinary;
+	std::shared_ptr<QToolButton> mLabel;
+	std::shared_ptr<QToolButton> mDirectives;
+	std::shared_ptr<QToolButton> mCommentOnly;
+	std::shared_ptr<QToolButton> mIntel;
+	std::shared_ptr<QLabel> mCurrentCompilerLabel;
+	std::shared_ptr<QComboBox> mCompilersList;
 	std::unique_ptr<network::RequestSender> mRequestSender;
 	std::unique_ptr<network::RequestGenerator> mRequestGenerator;
-	std::map<QToolButton *, QString> mOptions;
+	std::map<std::shared_ptr<QToolButton> , QString> mOptions;
 };
 }
 }

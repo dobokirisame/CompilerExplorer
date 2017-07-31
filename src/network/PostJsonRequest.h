@@ -2,11 +2,12 @@
 #define POSTJSONREQUEST_H
 #include "GetRequest.h"
 #include <QJsonObject>
+#include "compilerexplorer_global.h"
 
 namespace compilerExplorer {
 namespace network{
 
-class PostJsonRequest : public GetRequest
+class COMPILEREXPLORERSHARED_EXPORT PostJsonRequest : public GetRequest
 {
 public:
 	PostJsonRequest();

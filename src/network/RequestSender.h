@@ -2,19 +2,21 @@
 #define REQUESTSENDER_H
 
 #include <QObject>
+#include <memory>
+#include "compilerexplorer_global.h"
 
 class QNetworkAccessManager;
 namespace compilerExplorer {
 namespace network{
 class Request;
 
-class RequestSender : public QObject
+class COMPILEREXPLORERSHARED_EXPORT RequestSender : public QObject
 {
 	Q_OBJECT
 public:
 	explicit RequestSender(QObject *parent = nullptr);
 public slots:
-	QByteArray sendRequest(Request *request) const;
+	QByteArray sendRequest(const std::unique_ptr<Request> &request) const;
 private:
 	QNetworkAccessManager *mManager;
 };

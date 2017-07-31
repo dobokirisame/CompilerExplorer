@@ -18,7 +18,6 @@ std::unique_ptr<QNetworkReply> GetRequest::sendRequest(QNetworkAccessManager *ma
 		manager->connectToHostEncrypted(address());
 	}
 
-//	url.setPort(port());
 	url.setQuery(parametersString());
 
 	QSslConfiguration sslConfiguration(QSslConfiguration::defaultConfiguration());

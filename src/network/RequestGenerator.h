@@ -2,6 +2,7 @@
 #define REQUESTGENERATOR_H
 #include <QString>
 #include <memory>
+#include "compilerexplorer_global.h"
 
 class QSettings;
 
@@ -9,13 +10,13 @@ namespace compilerExplorer {
 namespace network{
 class Request;
 class RequestGeneratorPrivate;
-class RequestGenerator
+class COMPILEREXPLORERSHARED_EXPORT RequestGenerator
 {
 public:
 	RequestGenerator();
 	RequestGenerator(const QString &address, const int port);
 	virtual ~RequestGenerator();
-	Request *createCompilerRequest();
+	std::unique_ptr<Request> createCompilerRequest();
 	QString address() const;
 	void setAddress(const QString &address);
 	int port() const;

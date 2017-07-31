@@ -3,13 +3,14 @@
 
 #include <QWidget>
 #include <QSettings>
+#include "compilerexplorer_global.h"
 
 namespace Ui {
 class CompilerExplorerOptionsWidget;
 }
 namespace compilerExplorer {
 namespace gui{
-class CompilerExplorerOptionsWidget : public QWidget
+class COMPILEREXPLORERSHARED_EXPORT CompilerExplorerOptionsWidget : public QWidget
 {
 	Q_OBJECT
 

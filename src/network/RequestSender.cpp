@@ -17,7 +17,7 @@ RequestSender::RequestSender(QObject *parent) :
 
 }
 
-QByteArray RequestSender::sendRequest(Request *request) const {
+QByteArray RequestSender::sendRequest(const std::unique_ptr<Request> &request) const {
 	QTimer timer;
 	timer.setInterval(timeout);
 	timer.setSingleShot(true);
