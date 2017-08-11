@@ -31,10 +31,10 @@ License: MIT
 > **Instruction for Windows**
 >
 >If you use Linux or macOs there will be no problem for you to start local compiler-explorer server whith local compilers. 
->But if you use MSYS2 with MinGW64 on Windows OS you might have problems. 
+>But if you use MSYS2 with MinGW64 on Windows OS you might have one. 
 >Go to **c-preload/Makefile** 
->Edit this line **$(CC) -std=c99 -shared -O1 -fPIC $^ -o $@ $(LDL)** to something like this **$(GCC) --std=c++1z -shared -O3 -fPIC $^ -o $@ $(LDL)"** 
->It must be GCC. 
+>Change this line **$(CC) -std=c99 -shared -O1 -fPIC $^ -o $@ $(LDL)** 
+>To something like this **$(GCC) --std=c++1z -shared -O3 -fPIC $^ -o $@ $(LDL)"** 
 >Then go to **c-preload/preload.c** 
 >Edit line **resolved = realpath(path, resolvedBuf);** 
 >Just make **resolved =  NULL;** 
