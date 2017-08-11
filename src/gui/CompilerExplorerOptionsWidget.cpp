@@ -34,7 +34,7 @@ void CompilerExplorerOptionsWidget::loadSettings(const QSettings &settings) {
 	                                            QString("https://gcc.godbolt.org/")).toString();
 	ui->remoteServerUrl->setText(remoteServerUrl);
 	ui->localServerGroupBox->setEnabled(useLocalServer);
-	ui->localServerSettingsGroup->setEnabled(startLocalServer);
+	ui->localServerSettingsGroup->setChecked(startLocalServer);
 	ui->remoteServerUrl->setEnabled(!useLocalServer);
 }
 
