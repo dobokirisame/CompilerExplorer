@@ -98,7 +98,8 @@ void CompilerExplorerPlugin::restartNodeJsServer() {
 		return;
 	}
 	QStringList args;
-	args << compilerExplorerLocation +"/app.js" << "--language C++" << "--port=" + QString::number(localPort);
+	args << compilerExplorerLocation +"/app.js" << "--language C++"
+	     << "--port=" + QString::number(localPort);
 	mNodeJsServer->setWorkingDirectory(compilerExplorerLocation);
 	mNodeJsServer->start(nodeJsLocation + " " + args.join(" "));
 	emit serverChanged();
