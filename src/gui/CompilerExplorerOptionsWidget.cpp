@@ -29,10 +29,12 @@ void CompilerExplorerOptionsWidget::loadSettings(const QSettings &settings) {
 	const auto localPort = settings.value(constants::localServerPortKey,
 	                                            10240).toInt();
 	ui->localPort->setValue(localPort);
+	const auto startLocalServer = settings.value(constants::startLocalServerKey, true).toBool();
 	const auto remoteServerUrl = settings.value(constants::remoteServerUrlKey,
 	                                            QString("https://gcc.godbolt.org/")).toString();
 	ui->remoteServerUrl->setText(remoteServerUrl);
 	ui->localServerGroupBox->setEnabled(useLocalServer);
+	ui->localServerSettingsGroup->setEnabled(startLocalServer);
 	ui->remoteServerUrl->setEnabled(!useLocalServer);
 }
 
@@ -41,17 +43,20 @@ void CompilerExplorerOptionsWidget::apply(QSettings &settings) {
 	const auto compilerExplorerLocation = settings.value(constants::compilerExplorerLocationKey,
 	                                                     QString()).toString();
 	const auto useLocalServer = settings.value(constants::useLocalServerKey).toBool();
+	const auto startLocalServer = settings.value(constants::startLocalServerKey, true).toBool();
 	const auto remoteServerUrl = settings.value(constants::remoteServerUrlKey, QString()).toString();
 	const auto localPort = settings.value(constants::localServerPortKey, 10240).toInt();
 
 	settings.setValue(constants::useLocalServerKey ,ui->useLocalServerButton->isChecked());
+	settings.setValue(constants::startLocalServerKey, ui->localServerSettingsGroup->isChecked());
 	settings.setValue(constants::nodejsFileNameKey, ui->nodejsLocation->text());
 	settings.setValue(constants::compilerExplorerLocationKey, ui->compilerExplorerLocation->text());
 	settings.setValue(constants::localServerPortKey, ui->localPort->value());
 	settings.setValue(constants::remoteServerUrlKey, ui->remoteServerUrl->text());
 
 	if((nodejsLocation != ui->nodejsLocation->text()) ||
-	        (compilerExplorerLocation != ui->compilerExplorerLocation->text()) ||
+	        startLocalServer != ui->localServerSettingsGroup->isChecked() ||
+	        compilerExplorerLocation != ui->compilerExplorerLocation->text() ||
 	        useLocalServer != ui->useLocalServerButton->isChecked() ||
 	        localPort != ui->localPort->value() ||
 	        remoteServerUrl != ui->remoteServerUrl->text()) {
