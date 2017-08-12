@@ -48,7 +48,11 @@ std::unique_ptr<Request> RequestGenerator::createCompilerRequest() {
 }
 
 QString RequestGenerator::address() const {
-	return d->address;
+	QString port = "";
+	if(d->port == 80) {
+		port = ":" + QString::number(d->port);
+	}
+	return d->address + port;
 }
 
 void RequestGenerator::setAddress(const QString &address) {
