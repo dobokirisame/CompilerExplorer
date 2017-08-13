@@ -51,6 +51,6 @@ License: MIT
 >IDK why but this module doesn't work well on Windows OS.  
 >So just run  
 > ```javascript   
->/your/NodeJs/Location/node -- ./app.js  
+>/your/NodeJs/Location/node ./app.js  
 >```  
 > 
