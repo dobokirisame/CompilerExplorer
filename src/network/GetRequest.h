@@ -12,12 +12,12 @@ class COMPILEREXPLORERSHARED_EXPORT GetRequest : public Request
 public:
 	GetRequest();
 	std::unique_ptr<QNetworkReply> sendRequest(QNetworkAccessManager *manager) override;
-	void addParameter(const QString &parameterName, const QString &parameterValue);
+	virtual void addParameter(const QString &parameterName, const QString &parameterValue);
 	std::map<QString, QString> parameters() const;
 	QString requestName() override;
 protected:
 	QString parametersString() const;
-
+	QString parametersString(const std::map<QString, QString> &parameters);
 private:
 	std::map<QString, QString> mParams;
 };

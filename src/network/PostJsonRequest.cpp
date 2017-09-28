@@ -21,8 +21,12 @@ std::unique_ptr<QNetworkReply> PostJsonRequest::sendRequest(QNetworkAccessManage
 }
 
 QJsonObject PostJsonRequest::jsonRequest() const {
+	return jsonRequest(parameters());
+}
+
+QJsonObject PostJsonRequest::jsonRequest(const std::map<QString, QString> &parameters) const {
 	QJsonObject result;
-	for(const auto &param : parameters()) {
+	for(const auto &param : parameters) {
 		result.insert(param.first, param.second);
 	}
 	if(!filters().isEmpty()) {

@@ -32,8 +32,12 @@ void GetRequest::addParameter(const QString &parameterName, const QString &param
 }
 
 QString GetRequest::parametersString() const {
+	return parametersString(mParams);
+}
+
+QString GetRequest::parametersString(const std::map<QString, QString> &parameters) {
 	QString result;
-	for(const auto &param : mParams) {
+	for(const auto &param : parameters) {
 		result.append(param.first);
 		result.append('=');
 		result.append(param.second);
