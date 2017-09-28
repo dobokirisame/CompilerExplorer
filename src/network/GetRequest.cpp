@@ -12,7 +12,7 @@ GetRequest::GetRequest()
 std::unique_ptr<QNetworkReply> GetRequest::sendRequest(QNetworkAccessManager *manager) {
 	if(address().isEmpty() || !manager)
 		return nullptr;
-	auto request = generateRequest();
+	auto request = generateRequest(manager);
 	return std::unique_ptr<QNetworkReply>(manager->get(request));
 }
 
@@ -35,7 +35,7 @@ QString GetRequest::parametersString(const std::map<QString, QString> &parameter
 	return result;
 }
 
-QNetworkRequest GetRequest::generateRequest() const {
+QNetworkRequest GetRequest::generateRequest(QNetworkAccessManager *manager) const {
 	QNetworkRequest request;
 	QUrl url(address());
 	if(address().startsWith("https")) {
@@ -55,7 +55,7 @@ std::map<QString, QString> GetRequest::parameters() const {
 	return mParams;
 }
 
-QString GetRequest::requestName() {
+QString GetRequest::requestName() const {
 	return QObject::tr("GetRequest");
 }
 

@@ -28,7 +28,7 @@ std::unique_ptr<QNetworkReply> PutJsonRequest::sendRequest(QNetworkAccessManager
 	return std::unique_ptr<QNetworkReply>(manager->put(request, QJsonDocument(jsonRequest(mPostParameters)).toJson()));
 }
 
-QString PutJsonRequest::requestName() {
+QString PutJsonRequest::requestName() const {
 	return QObject::tr("PutJsonRequest");
 }
 }

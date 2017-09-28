@@ -9,6 +9,8 @@ class COMPILEREXPLORERSHARED_EXPORT DeleteRequest : public GetRequest
 {
 public:
 	DeleteRequest();
+	std::unique_ptr<QNetworkReply> sendRequest(QNetworkAccessManager *manager) override;
+	QString requestName() const override;
 };
 }
 }

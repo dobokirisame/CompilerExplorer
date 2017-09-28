@@ -15,9 +15,7 @@ public:
 	void addPostParameter(const QString &parameterName, const QString &parameterValue);
 	void addParameter(const QString &parameterName, const QString &parameterValue) = delete;
 	std::unique_ptr<QNetworkReply> sendRequest(QNetworkAccessManager *manager) override;
-	QString requestName() override;
-protected:
-
+	QString requestName() const override;
 private:
 	std::map<QString, QString> mGetParameters;
 	std::map<QString, QString> mPostParameters;
