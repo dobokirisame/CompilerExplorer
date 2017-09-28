@@ -15,9 +15,9 @@ public:
 	void addParameter(const QString &parameterName, const QString &parameterValue);
 	std::map<QString, QString> parameters() const;
 	QString requestName() override;
-
-private:
+protected:
 	QString parametersString() const;
+
 private:
 	std::map<QString, QString> mParams;
 };
