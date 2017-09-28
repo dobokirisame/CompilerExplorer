@@ -12,18 +12,7 @@ GetRequest::GetRequest()
 std::unique_ptr<QNetworkReply> GetRequest::sendRequest(QNetworkAccessManager *manager) {
 	if(address().isEmpty() || !manager)
 		return nullptr;
-	QNetworkRequest request;
-	QUrl url(address());
-	if(address().startsWith("https")) {
-		manager->connectToHostEncrypted(address());
-	}
-
-	url.setQuery(parametersString());
-
-	QSslConfiguration sslConfiguration(QSslConfiguration::defaultConfiguration());
-	sslConfiguration.setProtocol(QSsl::SecureProtocols);
-	request.setSslConfiguration(sslConfiguration);
-	request.setUrl(url);
+	auto request = generateRequest();
 	return std::unique_ptr<QNetworkReply>(manager->get(request));
 }
 
@@ -44,6 +33,22 @@ QString GetRequest::parametersString(const std::map<QString, QString> &parameter
 		result.append('&');
 	}
 	return result;
+}
+
+QNetworkRequest GetRequest::generateRequest() const {
+	QNetworkRequest request;
+	QUrl url(address());
+	if(address().startsWith("https")) {
+		manager->connectToHostEncrypted(address());
+	}
+
+	url.setQuery(parametersString());
+
+	QSslConfiguration sslConfiguration(QSslConfiguration::defaultConfiguration());
+	sslConfiguration.setProtocol(QSsl::SecureProtocols);
+	request.setSslConfiguration(sslConfiguration);
+	request.setUrl(url);
+	return request;
 }
 
 std::map<QString, QString> GetRequest::parameters() const {
