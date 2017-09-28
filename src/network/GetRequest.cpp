@@ -35,7 +35,7 @@ QString GetRequest::parametersString() const {
 	return parametersString(mParams);
 }
 
-QString GetRequest::parametersString(const std::map<QString, QString> &parameters) {
+QString GetRequest::parametersString(const std::map<QString, QString> &parameters) const {
 	QString result;
 	for(const auto &param : parameters) {
 		result.append(param.first);
