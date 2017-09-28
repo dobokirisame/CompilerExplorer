@@ -1,4 +1,6 @@
 #include "PutJsonRequest.h"
+#include <QNetworkRequest>
+#include <QJsonDocument>
 
 namespace compilerExplorer {
 namespace network{
